@@ -12,6 +12,7 @@ class Network:
         self.fidelity_threshold_values = []
         self.set_of_paths  ={}
         self.each_storage_block_paths ={}
+        self.each_storage_block_time_treshold = {}
     def each_storage_block_freshness(self,j,b,delat_value):
         return 1
     def check_path_include_edge(self,edge,p):
