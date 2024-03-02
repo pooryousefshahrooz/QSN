@@ -29,7 +29,7 @@ from solver import *
 # 0:(0,1),1:(1,2),2:(2,3),3:(3,4),4:(4,5),5:(5,6)
 network = Network()
 network.set_of_paths = {0:[0,1,2,3,4,5],1:[1,2,3],2:[0,5]}
-network.each_edge_fidelity = {0:0.99,1:0.99,2:0.99,3:0.99,4:0.99,5:0.99}
+network.each_edge_fidelity = {0:0.9,1:0.9,2:0.9,3:0.9,4:0.9,5:0.9}
 network.max_edge_capacity =800
 network.each_request_real_paths = {0:[0],1:[1]}
 network.each_request_virtual_paths = {0:[2],1:[]}
