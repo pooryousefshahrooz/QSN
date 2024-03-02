@@ -57,7 +57,7 @@ work_load = Work_load()
 results_file_path = "../QSN_results.csv"
 τ_coh_list = np.logspace(1,2,30)
 for t_max in range(10,50,10):
-    for i in range(1):
+    for i in range(400):
         for request_fidelity_threshold in [0.9,0.8,0.7,0.94]:
             work_load.each_t_user_pairs={}
             work_load.T = []
@@ -107,20 +107,20 @@ for t_max in range(10,50,10):
                                                                         storage_capacity,
                                                                     τ_coh,delta_value
                                                                          ))
-                            for path,b_f in network.each_path_basic_fidelity.items():
-                                print(path,b_f,network.oracle_for_target_fidelity[path])
+#                             for path,b_f in network.each_path_basic_fidelity.items():
+#                                 print(path,b_f,network.oracle_for_target_fidelity[path])
                             
                             solver =Solver()
                             service_delay = solver.request_service_delay_minimization(network,work_load,
                                                                       1000,i,True,storage_capacity,delta_value)
-                            line_items = [t_max,request_fidelity_threshold,
+                            line_items = [t_max,i,request_fidelity_threshold,
                                           storage_block_threshold,
-                                          storage_capacity,i,τ_coh,service_delay]
+                                          storage_capacity,τ_coh,service_delay]
                             with open(results_file_path, 'a') as newFile:                                
                                             newFileWriter = csv.writer(newFile)
                                             newFileWriter.writerow([item for item in line_items])
                                         
-                            time.sleep(30)
+#                             time.sleep(30)
 
 
 # In[ ]:
