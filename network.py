@@ -41,7 +41,7 @@ class Network:
                     break
             else:
                 basic_fidelity = 1/4+(3/4)*(4*self.each_edge_fidelity[path_edges[0]]-1)/3
-                basic_fidelity  = (basic_fidelity)*((4*storage_block_threshold-1)/3)
+                basic_fidelity  = (basic_fidelity)*((4*max(storage_block_threshold,self.each_path_basic_fidelity[1])-1)/3)
                 basic_fidelity  = (basic_fidelity)*((4*self.each_edge_fidelity[5]-1)/3)
                 basic_fidelity = basic_fidelity
             self.each_path_basic_fidelity[path]= round(basic_fidelity,3)
