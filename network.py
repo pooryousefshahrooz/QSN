@@ -4,6 +4,11 @@
 # In[ ]:
 
 
+import numpy as np
+
+# In[ ]:
+
+
 class Network:
     def __init__(self):
         self.global_each_basic_fidelity_target_fidelity_required_EPRs  = {}
@@ -13,13 +18,69 @@ class Network:
         self.set_of_paths  ={}
         self.each_storage_block_paths ={}
         self.each_storage_block_time_treshold = {}
+        self.τ_coh = 10
     def each_storage_block_freshness(self,j,b,delat_value):
-        return 1
+        return 1/2*(1-np.exp(-delat_value/self.τ_coh))
     def check_path_include_edge(self,edge,p):
         if edge in self.set_of_paths[p]:
             return True
         elif edge not  in self.set_of_paths[p]:
             return False
+    def set_each_path_basic_fidelity(self,storage_block_threshold):
+        
+        self.each_path_basic_fidelity = {}
+        for path,path_edges in self.set_of_paths.items():
+            if path in [0,1]:
+                if path_edges:
+                    basic_fidelity = 1/4+(3/4)*(4*self.each_edge_fidelity[path_edges[0]]-1)/3
+                    for edge in path_edges[1:]:
+                        basic_fidelity  = (basic_fidelity)*((4*self.each_edge_fidelity[edge]-1)/3)
+                    basic_fidelity = basic_fidelity
+                else:
+                    print("Error")
+                    break
+            else:
+                basic_fidelity = 1/4+(3/4)*(4*self.each_edge_fidelity[path_edges[0]]-1)/3
+                basic_fidelity  = (basic_fidelity)*((4*storage_block_threshold-1)/3)
+                basic_fidelity  = (basic_fidelity)*((4*self.each_edge_fidelity[5]-1)/3)
+                basic_fidelity = basic_fidelity
+            self.each_path_basic_fidelity[path]= round(basic_fidelity,3)
+    def T_sequential_no_cutoff(τ_coh, mu_link, F_link,links):
+        """ Calculate performance metrics for asynchronous sequential scheme using analytical formulas
+        inputs:
+            τ_coh: coherence time of quantum memories
+            mu_link: parameter in 2qubit depolarizing channel describing noisy link-level entanglement and
+            entanglement swapping error
+            F_link: fidelity of link level entanglement (i.e.,quality of locally generated Bell pairs)
+            links: list of segment (link) lengths in km
+        outputs:
+            Raw_rate: 1/ expected value of total time for e2e entanglement delivery
+            *** application specific quantities:
+            skr: secret key rate for qkd (does not include idle times of end memories)
+            F_e2e: e2e entanglement fidelity for entanglement distrubtion (does include idle times of end memories)
+        """
+        if type(links) != np.ndarray:
+            links = np.array(links)
+        τs = links/c
+        T_tot = 2* np.sum( τs / (p_link*Trans(links)) )
+
+        raw_rate = 1/T_tot
+        N_links = len(links) # number of links, i.e. no. of repeaters + 1
+        mu_e2e = mu_link**(2*N_links-1)
+        # secret key rate calculations
+        f_memory_qkd = np.prod( p_link*Trans(links[1:])*np.exp(-4*τs[1:]/τ_coh)/(1- (1-p_link*Trans(links[1:]))*np.exp(-2*τs[1:]/τ_coh) )  )
+        f_e2e_qkd = 0.5 + 0.5 * (2*F_link-1)**N_links *f_memory_qkd
+        ex = (1 - mu_e2e)/2
+        ez = (1 + mu_e2e)/2 - mu_e2e * f_e2e_qkd
+        skr = raw_rate * (1-h([ex])-h([ez]))
+        #  fidelity of e2e Bell pairs
+        Le2e = np.sum(links)
+        τe2e = Le2e/c
+        f_memory_bell = np.exp(-3*τe2e/τ_coh) *np.prod(p_link*Trans(links[1:])*np.exp(-4*τs[1:]/τ_coh)/(1- (1-p_link*Trans(links[1:]))*np.exp(-4*τs[1:]/τ_coh) ) )
+        f_e2e_bell = 0.5 + 0.5 * (2*F_link-1)**N_links *f_memory_bell
+        F_e2e = mu_e2e * f_e2e_bell + (1-mu_e2e)/4
+
+        return raw_rate, skr, F_e2e
     def get_path_length(self,p):
         return len(self.set_of_paths[p])
     def get_required_purification_EPR_pairs(self,p,threshold):
