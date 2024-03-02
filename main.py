@@ -45,7 +45,7 @@ network.each_storage_block_paths = {1:{0:[1]}}
 
 #Edge constraint
 network.set_E = [0,1,2,3,4,5]
-network.each_edge_capacity = {0:800,1:100,2:100,3:100,4:100,5:800}
+network.each_edge_capacity = {0:600,1:100,2:100,3:100,4:100,5:800}
 
 work_load = Work_load()
   
@@ -92,9 +92,9 @@ for t_max in range(10,50,10):
 
                 # Demand constriant
                 work_load.each_t_each_request_demand = {}
-                work_load.set_each_user_pair_demands(len(work_load.T),work_load.each_t_user_pairs,50,2)
+                work_load.set_each_user_pair_demands(len(work_load.T),work_load.each_t_user_pairs,100,2)
 #                 print("work_load.each_t_each_request_demand",work_load.each_t_each_request_demand)
-                for storage_capacity in range(200,2000,200):
+                for storage_capacity in range(10,500,50):
                     for idx,τ_coh in enumerate(τ_coh_list):
                         network.τ_coh = τ_coh
                         for delta_value in range(10,100,10):
@@ -104,6 +104,9 @@ for t_max in range(10,50,10):
                                                                         storage_capacity,
                                                                     τ_coh,delta_value
                                                                          ))
+                            for path,b_f in network.each_path_basic_fidelity.items():
+                                print(path,b_f,network.oracle_for_target_fidelity[path])
+                            
                             solver =Solver()
                             service_delay = solver.request_service_delay_minimization(network,work_load,
                                                                       1000,i,True,storage_capacity,delta_value)
