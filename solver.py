@@ -164,7 +164,7 @@ class Solver:
 
         opt_model.minimize(objective)
 
-        opt_model.print_information()
+#         opt_model.print_information()
 
         opt_model.solve()
 
