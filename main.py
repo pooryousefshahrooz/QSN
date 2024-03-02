@@ -106,7 +106,7 @@ for t_max in range(10,50,10):
                                                                         storage_block_threshold,
                                                                         storage_capacity,
                                                                     τ_coh,delta_value
-                                                                         ))
+                                                                         ),end="\r")
 #                             for path,b_f in network.each_path_basic_fidelity.items():
 #                                 print(path,b_f,network.oracle_for_target_fidelity[path])
                             
