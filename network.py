@@ -29,16 +29,33 @@ class Network:
     def set_each_path_basic_fidelity(self,storage_block_threshold):
         
         self.each_path_basic_fidelity = {}
+        
         for path,path_edges in self.set_of_paths.items():
             if path in [0,1]:
                 if path_edges:
+                    #print("this is path id %s and edges %s"%(path,path_edges))
                     basic_fidelity = 1/4+(3/4)*(4*self.each_edge_fidelity[path_edges[0]]-1)/3
+                    #1/4 +3/4((4F1-1)/3)((4F2-1)/3)
+                    #print("for path %s with lenght %s first edge fidelity %s %s "%(path,self.each_path_legth[path],self.each_edge_fidelity[path_edges[0]],basic_fidelity ))
                     for edge in path_edges[1:]:
+        #                 basic_fidelity = basic_fidelity * self.each_edge_fidelity[edge]
+                        #print("edge with fidelity %s"%(self.each_edge_fidelity[edge]))
                         basic_fidelity  = (basic_fidelity)*((4*self.each_edge_fidelity[edge]-1)/3)
                     basic_fidelity = basic_fidelity
                 else:
-                    print("Error")
-                    break
+                    basic_fidelity = 0.999
+            
+            
+#         for path,path_edges in self.set_of_paths.items():
+#             if path in [0,1]:
+#                 if path_edges:
+#                     basic_fidelity = 1/4+(3/4)*(4*self.each_edge_fidelity[path_edges[0]]-1)/3
+#                     for edge in path_edges[1:]:
+#                         basic_fidelity  = (basic_fidelity)*((4*self.each_edge_fidelity[edge]-1)/3)
+#                     basic_fidelity = basic_fidelity
+#                 else:
+#                     print("Error")
+#                     break
             else:
                 basic_fidelity = 1/4+(3/4)*(4*self.each_edge_fidelity[path_edges[0]]-1)/3
                 basic_fidelity  = (basic_fidelity)*((4*max(storage_block_threshold,self.each_path_basic_fidelity[1])-1)/3)
