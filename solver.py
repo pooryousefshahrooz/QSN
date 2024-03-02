@@ -153,7 +153,8 @@ class Solver:
 
         """defining an objective, which is a linear expression"""
 
-        objective = opt_model.sum(1/len(work_load.T[1:])*1/len(work_load.each_t_real_requests[t])*1/work_load.each_t_each_request_demand[t][k]
+        objective = opt_model.sum(1/len(work_load.T[1:])*1/len(work_load.each_t_real_requests[t])
+                                  *1/work_load.each_t_each_request_demand[t][k]
                                   *(w_vars[t,k,p] * network.get_path_length(p)) for t in work_load.T[1:]
                                   for k in work_load.each_t_user_pairs[t] 
                                   for p in network.each_request_real_paths[k]+network.each_request_virtual_paths[k]
@@ -168,7 +169,7 @@ class Solver:
         opt_model.solve()
 
 
-        print('docplex.mp.solution',opt_model.solution)
+#         print('docplex.mp.solution',opt_model.solution)
         objective_value = -1
         try:
             if opt_model.solution:

@@ -57,7 +57,7 @@ work_load = Work_load()
 results_file_path = "../QSN_results.csv"
 τ_coh_list = np.logspace(1,2,30)
 for t_max in range(10,50,10):
-    for i in range(400):
+    for i in range(800):
         for request_fidelity_threshold in [0.9,0.8,0.7,0.94]:
             work_load.each_t_user_pairs={}
             work_load.T = []
