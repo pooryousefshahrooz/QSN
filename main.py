@@ -98,7 +98,12 @@ for t_max in range(10,50,10):
                     for idx,τ_coh in enumerate(τ_coh_list):
                         network.τ_coh = τ_coh
                         for delta_value in range(10,100,10):
-
+                            print("**** for t_max %s exp %s req.Fth %s S.Blk.Fth %s strg_C %s τ_coh %s delta_value %s **** "%(t_max,
+                                                                          i,request_fidelity_threshold,
+                                                                        storage_block_threshold,
+                                                                        storage_capacity,
+                                                                    τ_coh,delta_value
+                                                                         ))
                             solver =Solver()
                             service_delay = solver.request_service_delay_minimization(network,work_load,
                                                                       1000,i,True,storage_capacity,delta_value)
@@ -108,6 +113,8 @@ for t_max in range(10,50,10):
                             with open(results_file_path, 'a') as newFile:                                
                                             newFileWriter = csv.writer(newFile)
                                             newFileWriter.writerow([item for item in line_items])
+                                        
+                            time.sleep(30)
 
 
 # In[ ]:
