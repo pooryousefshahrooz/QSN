@@ -88,6 +88,9 @@ for t_max in range(10,50,10):
                 network.fidelity_threshold_values = [0.9,storage_block_threshold]
                 network.set_each_path_basic_fidelity(storage_block_threshold)
                 network.oracle_for_target_fidelity = {}
+                for path,b_f in network.each_path_basic_fidelity.items():
+                    print(path,b_f)
+                        
                 network.set_required_EPR_pairs_for_each_path_each_fidelity_threshold()
 
                 # Demand constriant
