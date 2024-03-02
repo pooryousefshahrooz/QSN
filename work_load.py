@@ -29,7 +29,7 @@ class Work_load:
         for time in range(number_of_time_slots):
 #             traffic = tm.at_time(time)
 #             print("traffic",traffic)
-            demand = random.randint(0,spike_mean)
+            demand = random.randint(1,spike_mean)
             try:
                 self.each_t_each_request_demand[time][0] = demand
             except:
