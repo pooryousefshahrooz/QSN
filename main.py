@@ -173,204 +173,204 @@ for t_max in range(10,50,10):
 # In[ ]:
 
 
-def EGR_for_dynamic_population(each_network_topology_file,spike_mean,num_spikes,experiment_repeat,storage_node_selection_scheme):
-    for spike_mean in spike_means:
-        for network_topology,file_path in each_network_topology_file.items():
-            import pdb
-            each_storage_each_path_number_value = {}
-            network = Network(file_path)
+# def EGR_for_dynamic_population(each_network_topology_file,spike_mean,num_spikes,experiment_repeat,storage_node_selection_scheme):
+#     for spike_mean in spike_means:
+#         for network_topology,file_path in each_network_topology_file.items():
+#             import pdb
+#             each_storage_each_path_number_value = {}
+#             network = Network(file_path)
             
-            for i in range(experiment_repeat):
+#             for i in range(experiment_repeat):
         
-                network = Network(file_path)
-                network.get_user_pairs_over_dynamicly_chaning_population(number_of_user_pairs,distance_between_users,number_of_time_slots)
+#                 network = Network(file_path)
+#                 network.get_user_pairs_over_dynamicly_chaning_population(number_of_user_pairs,distance_between_users,number_of_time_slots)
 
-                work_load = Work_load(number_of_time_slots,"time_demands_file.csv")
+#                 work_load = Work_load(number_of_time_slots,"time_demands_file.csv")
 
-                objective_values = []
-                selected_storage_nodes = []
-                selected_storage_pairs = []
+#                 objective_values = []
+#                 selected_storage_nodes = []
+#                 selected_storage_pairs = []
 
-                #nx.draw(network.g,with_labels=True)
-                # plt.show()
-                network.reset_pair_paths()
-                pairs = []
-                print("network.each_t_user_pairs",network.each_t_user_pairs)
-                for t,user_pairs in network.each_t_user_pairs.items():            
-                    for user_pair in user_pairs:
-                        if user_pair not in pairs:
-                            pairs.append(user_pair)
-                network.get_each_user_pair_real_paths(pairs)
+#                 #nx.draw(network.g,with_labels=True)
+#                 # plt.show()
+#                 network.reset_pair_paths()
+#                 pairs = []
+#                 print("network.each_t_user_pairs",network.each_t_user_pairs)
+#                 for t,user_pairs in network.each_t_user_pairs.items():            
+#                     for user_pair in user_pairs:
+#                         if user_pair not in pairs:
+#                             pairs.append(user_pair)
+#                 network.get_each_user_pair_real_paths(pairs)
 
-                import pdb
-                #pdb.set_trace()
+#                 import pdb
+#                 #pdb.set_trace()
 
 
-                """select and add new storage pairs"""
+#                 """select and add new storage pairs"""
 
-                for number_of_storages in range(7):
-                    print("for number of storages round  ",number_of_storages)
-                    network.get_new_storage_pairs(number_of_storages,storage_node_selection_scheme)
-                    work_load.reset_variables()
-                    work_load.set_each_time_requests(network.each_t_user_pairs,network.storage_pairs)
-                    work_load.set_each_time_real_requests(network.each_t_user_pairs)
-                    """with new storage pairs, we will check the solution for each number of paths(real and virtual)"""
-                    for num_paths in range(3,4):
+#                 for number_of_storages in range(7):
+#                     print("for number of storages round  ",number_of_storages)
+#                     network.get_new_storage_pairs(number_of_storages,storage_node_selection_scheme)
+#                     work_load.reset_variables()
+#                     work_load.set_each_time_requests(network.each_t_user_pairs,network.storage_pairs)
+#                     work_load.set_each_time_real_requests(network.each_t_user_pairs)
+#                     """with new storage pairs, we will check the solution for each number of paths(real and virtual)"""
+#                     for num_paths in range(3,4):
 
-                        path_counter_id = 0
-                        #print("network.storage_pairs",network.storage_pairs)
-                        #import pdb
-                        #pdb.set_trace()
-                        network.get_each_user_pair_real_paths(network.storage_pairs)
-                        if number_of_storages==1:
-                            number_of_storages = 2
+#                         path_counter_id = 0
+#                         #print("network.storage_pairs",network.storage_pairs)
+#                         #import pdb
+#                         #pdb.set_trace()
+#                         network.get_each_user_pair_real_paths(network.storage_pairs)
+#                         if number_of_storages==1:
+#                             number_of_storages = 2
 
-                        """first we add the real paths between storage pairs"""
+#                         """first we add the real paths between storage pairs"""
 
-                        print("for iteration %s storage %s and path number %s"%(i,number_of_storages,num_paths))
-                        for storage_pair in network.storage_pairs:
-                            #print("going to get real paths between storage pair ",storage_pair)
-                            paths = network.get_real_path(storage_pair,num_paths)
-                            #print("got paths",paths)
-                            for path in paths:
-                                network.set_each_path_length(path_counter_id,path)
-                                network.set_of_paths[path_counter_id] = path
-                                network.each_path_path_id[tuple(path)] = path_counter_id
-                                try:
-                                    network.each_request_real_paths[storage_pair].append(path_counter_id)
-                                except:
-                                    network.each_request_real_paths[storage_pair]=[path_counter_id]
-                                try:
-                                    network.each_storage_real_paths[storage_pair].append(path)
-                                except:
-                                    network.each_storage_real_paths[storage_pair]=[path]
-                                #print("*** we used path_counter_id",path_counter_id)
-                                path_counter_id+=1
+#                         print("for iteration %s storage %s and path number %s"%(i,number_of_storages,num_paths))
+#                         for storage_pair in network.storage_pairs:
+#                             #print("going to get real paths between storage pair ",storage_pair)
+#                             paths = network.get_real_path(storage_pair,num_paths)
+#                             #print("got paths",paths)
+#                             for path in paths:
+#                                 network.set_each_path_length(path_counter_id,path)
+#                                 network.set_of_paths[path_counter_id] = path
+#                                 network.each_path_path_id[tuple(path)] = path_counter_id
+#                                 try:
+#                                     network.each_request_real_paths[storage_pair].append(path_counter_id)
+#                                 except:
+#                                     network.each_request_real_paths[storage_pair]=[path_counter_id]
+#                                 try:
+#                                     network.each_storage_real_paths[storage_pair].append(path)
+#                                 except:
+#                                     network.each_storage_real_paths[storage_pair]=[path]
+#                                 #print("*** we used path_counter_id",path_counter_id)
+#                                 path_counter_id+=1
 
-                        across_all_time_slots_pairs = []
-                        for t,user_pairs in network.each_t_user_pairs.items():
-                            for user_pair in user_pairs:
-                                if user_pair not in across_all_time_slots_pairs:
-                                    across_all_time_slots_pairs.append(user_pair)
-                        all_sub_paths = []
-                        for user_pair in across_all_time_slots_pairs:
-                            paths = network.get_real_path(user_pair,num_paths)
-                            #print("we got real paths for user pair",user_pair,paths)
-                            for path in paths:
-                                network.set_of_paths[path_counter_id] = path
-                                network.set_each_path_length(path_counter_id,path)
-                                network.each_path_path_id[tuple(path)] = path_counter_id
-                                try:
-                                    network.each_request_real_paths[user_pair].append(path_counter_id)
-                                except:
-                                    network.each_request_real_paths[user_pair]=[path_counter_id]
+#                         across_all_time_slots_pairs = []
+#                         for t,user_pairs in network.each_t_user_pairs.items():
+#                             for user_pair in user_pairs:
+#                                 if user_pair not in across_all_time_slots_pairs:
+#                                     across_all_time_slots_pairs.append(user_pair)
+#                         all_sub_paths = []
+#                         for user_pair in across_all_time_slots_pairs:
+#                             paths = network.get_real_path(user_pair,num_paths)
+#                             #print("we got real paths for user pair",user_pair,paths)
+#                             for path in paths:
+#                                 network.set_of_paths[path_counter_id] = path
+#                                 network.set_each_path_length(path_counter_id,path)
+#                                 network.each_path_path_id[tuple(path)] = path_counter_id
+#                                 try:
+#                                     network.each_request_real_paths[user_pair].append(path_counter_id)
+#                                 except:
+#                                     network.each_request_real_paths[user_pair]=[path_counter_id]
                                 
-                                path_counter_id+=1
+#                                 path_counter_id+=1
     
-                            for storage_pair in network.storage_pairs:
-                                """add one new path to the previous paths"""
-                                for real_sub_path in network.each_storage_real_paths[storage_pair]:
+#                             for storage_pair in network.storage_pairs:
+#                                 """add one new path to the previous paths"""
+#                                 for real_sub_path in network.each_storage_real_paths[storage_pair]:
                                     
-                                    paths = network.get_paths_to_connect_users_to_storage(user_pair,real_sub_path,num_paths)
-    #                               
-                                    this_sub_path_id = network.each_path_path_id[tuple(real_sub_path)]
-                                    
-
-                                    for path in paths:
-                                        network.set_each_path_length(path_counter_id,path)
-                                        """we remove the sub path that is connecting two storage pairs 
-                                        from the path because we do not want to check the edge capacity for the edges of this subpath"""
-    #                                     print("we set length %s for path %s having sub path %s with ID %s"%(len(path),path,real_sub_path,this_sub_path_id))
-                                        try:
-                                            network.each_request_virtual_paths_include_subpath[user_pair][this_sub_path_id].append(path_counter_id)
-                                        except:
-                                            try:
-                                                network.each_request_virtual_paths_include_subpath[user_pair][this_sub_path_id]=[path_counter_id]
-                                            except:
-                                                network.each_request_virtual_paths_include_subpath[user_pair]={}
-                                                network.each_request_virtual_paths_include_subpath[user_pair][this_sub_path_id]=[path_counter_id]
-                                        if this_sub_path_id not in all_sub_paths:
-                                            all_sub_paths.append(this_sub_path_id)
-                                        path = network.remove_storage_pair_real_path_from_path(real_sub_path,path)
-                                        #print("and after removing sub path we have ",path,real_sub_path,len(path))
-                                        network.set_of_paths[path_counter_id] = path
-                                        try:
-                                            network.each_request_virtual_paths[user_pair].append(path_counter_id)
-                                        except:
-                                            network.each_request_virtual_paths[user_pair]=[path_counter_id]
-                                        #print("*** we used path_counter_id",path_counter_id)
-                                        path_counter_id+=1
-
-
-                                    for pair in network.storage_pairs:
-                                        network.each_request_virtual_paths[pair]=[]
-
-                                    #print("for user pair %s to storage pair %s we got real paths and it is:"%(user_pair,storage_pair))
-
-                        if number_of_storages==0:
-                            for t,pairs in network.each_t_user_pairs.items():
-                                for pair in pairs:
-                                    network.each_request_virtual_paths[pair]=[]
-
-                        for j in network.storage_pairs:
-                            for sub_path_id in all_sub_paths:
-                                try:
-                                    network.each_request_virtual_paths_include_subpath[j][sub_path_id] = []
-                                except:
-                                    network.each_request_virtual_paths_include_subpath[j]={}
-                                    network.each_request_virtual_paths_include_subpath[j][sub_path_id] = []
-                        for t in range(number_of_time_slots):
-                            for k in work_load.each_t_requests[t]:
-                                try:
-                                    if k in list(network.each_request_virtual_paths_include_subpath.keys()):
-                                        pass
-                                    else:
-                                        network.each_request_virtual_paths_include_subpath[k]= {}
-                                except:
-                                    network.each_request_virtual_paths_include_subpath[k]= {}
-
-                        """we set the capacity of each storage node"""
-
-                        network.set_storage_capacity()
-
-                        """we add new storage pairs as our user pairs and set the demand for them zero"""
-
-                        work_load.set_storage_pairs_as_user_pairs(network.storage_pairs)
-
-                        """we print all variables to check the variables and values"""
-
-                        life_time_set = [1000,2]
-                        for life_time in life_time_set:
-                            """solve the optimization"""        
-                            try:
-                                objective_value=0
-                                try:
-                                    objective_value,each_inventory_per_time_usage = CPLEX_maximizing_entanglement_generation(network,work_load,life_time,i)
-                                except ValueError:
-                                    print(ValueError)
-                                    pass
-                                objective_values.append(objective_value)
-                                if 0<objective_value<distance_between_users-1:
+#                                     paths = network.get_paths_to_connect_users_to_storage(user_pair,real_sub_path,num_paths)
+#     #                               
+#                                     this_sub_path_id = network.each_path_path_id[tuple(real_sub_path)]
                                     
 
-                                print("the objective value for %s storage nodes and %s paths between each pair of nodes is %s"%(number_of_storages,num_paths,objective_value))
+#                                     for path in paths:
+#                                         network.set_each_path_length(path_counter_id,path)
+#                                         """we remove the sub path that is connecting two storage pairs 
+#                                         from the path because we do not want to check the edge capacity for the edges of this subpath"""
+#     #                                     print("we set length %s for path %s having sub path %s with ID %s"%(len(path),path,real_sub_path,this_sub_path_id))
+#                                         try:
+#                                             network.each_request_virtual_paths_include_subpath[user_pair][this_sub_path_id].append(path_counter_id)
+#                                         except:
+#                                             try:
+#                                                 network.each_request_virtual_paths_include_subpath[user_pair][this_sub_path_id]=[path_counter_id]
+#                                             except:
+#                                                 network.each_request_virtual_paths_include_subpath[user_pair]={}
+#                                                 network.each_request_virtual_paths_include_subpath[user_pair][this_sub_path_id]=[path_counter_id]
+#                                         if this_sub_path_id not in all_sub_paths:
+#                                             all_sub_paths.append(this_sub_path_id)
+#                                         path = network.remove_storage_pair_real_path_from_path(real_sub_path,path)
+#                                         #print("and after removing sub path we have ",path,real_sub_path,len(path))
+#                                         network.set_of_paths[path_counter_id] = path
+#                                         try:
+#                                             network.each_request_virtual_paths[user_pair].append(path_counter_id)
+#                                         except:
+#                                             network.each_request_virtual_paths[user_pair]=[path_counter_id]
+#                                         #print("*** we used path_counter_id",path_counter_id)
+#                                         path_counter_id+=1
 
-    #                             print(each_inventory_per_time_usage)
-                                #time.sleep(10)
-                                for storage_pair,t_saved_EPRs in each_inventory_per_time_usage.items():
-                                    for t ,EPRs in t_saved_EPRs.items():
-                                        with open(inventory_utilization_results_file_path, 'a') as newFile:                                
-                                            newFileWriter = csv.writer(newFile)
-                                            newFileWriter.writerow([topology,number_of_storages,num_paths,i,life_time,storage_pair,t,EPRs,storage_node_selection_scheme]) 
 
-                                with open(results_file_path, 'a') as newFile:                                
-                                    newFileWriter = csv.writer(newFile)
-                                    newFileWriter.writerow([topology,number_of_storages,num_paths,life_time,objective_value,i,storage_node_selection_scheme]) 
+#                                     for pair in network.storage_pairs:
+#                                         network.each_request_virtual_paths[pair]=[]
 
-                            except ValueError:
-                                #pass
-                                print(ValueError)
-                print("until the %s th iteration we have %s"%(i,each_storage_each_path_number_value)) 
+#                                     #print("for user pair %s to storage pair %s we got real paths and it is:"%(user_pair,storage_pair))
+
+#                         if number_of_storages==0:
+#                             for t,pairs in network.each_t_user_pairs.items():
+#                                 for pair in pairs:
+#                                     network.each_request_virtual_paths[pair]=[]
+
+#                         for j in network.storage_pairs:
+#                             for sub_path_id in all_sub_paths:
+#                                 try:
+#                                     network.each_request_virtual_paths_include_subpath[j][sub_path_id] = []
+#                                 except:
+#                                     network.each_request_virtual_paths_include_subpath[j]={}
+#                                     network.each_request_virtual_paths_include_subpath[j][sub_path_id] = []
+#                         for t in range(number_of_time_slots):
+#                             for k in work_load.each_t_requests[t]:
+#                                 try:
+#                                     if k in list(network.each_request_virtual_paths_include_subpath.keys()):
+#                                         pass
+#                                     else:
+#                                         network.each_request_virtual_paths_include_subpath[k]= {}
+#                                 except:
+#                                     network.each_request_virtual_paths_include_subpath[k]= {}
+
+#                         """we set the capacity of each storage node"""
+
+#                         network.set_storage_capacity()
+
+#                         """we add new storage pairs as our user pairs and set the demand for them zero"""
+
+#                         work_load.set_storage_pairs_as_user_pairs(network.storage_pairs)
+
+#                         """we print all variables to check the variables and values"""
+
+#                         life_time_set = [1000,2]
+#                         for life_time in life_time_set:
+#                             """solve the optimization"""        
+#                             try:
+#                                 objective_value=0
+#                                 try:
+#                                     objective_value,each_inventory_per_time_usage = CPLEX_maximizing_entanglement_generation(network,work_load,life_time,i)
+#                                 except ValueError:
+#                                     print(ValueError)
+#                                     pass
+#                                 objective_values.append(objective_value)
+#                                 if 0<objective_value<distance_between_users-1:
+                                    
+
+#                                 print("the objective value for %s storage nodes and %s paths between each pair of nodes is %s"%(number_of_storages,num_paths,objective_value))
+
+#     #                             print(each_inventory_per_time_usage)
+#                                 #time.sleep(10)
+#                                 for storage_pair,t_saved_EPRs in each_inventory_per_time_usage.items():
+#                                     for t ,EPRs in t_saved_EPRs.items():
+#                                         with open(inventory_utilization_results_file_path, 'a') as newFile:                                
+#                                             newFileWriter = csv.writer(newFile)
+#                                             newFileWriter.writerow([topology,number_of_storages,num_paths,i,life_time,storage_pair,t,EPRs,storage_node_selection_scheme]) 
+
+#                                 with open(results_file_path, 'a') as newFile:                                
+#                                     newFileWriter = csv.writer(newFile)
+#                                     newFileWriter.writerow([topology,number_of_storages,num_paths,life_time,objective_value,i,storage_node_selection_scheme]) 
+
+#                             except ValueError:
+#                                 #pass
+#                                 print(ValueError)
+#                 print("until the %s th iteration we have %s"%(i,each_storage_each_path_number_value)) 
 
 # In[ ]:
 
