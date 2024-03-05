@@ -58,6 +58,7 @@ class Network:
                     break
                     
                 storage_block_threshold = max(storage_block_threshold,basic_fidelity)
+                self.fidelity_threshold_values.append(storage_block_threshold)
                 for t in range(0,T):
                     try:
                         self.each_storage_block_time_treshold[path][0][t]=storage_block_threshold
