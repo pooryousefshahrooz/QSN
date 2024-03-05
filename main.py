@@ -131,9 +131,9 @@ for t_max in t_max_list:
                                         
                             instance_counter+=1
                             end_time = time.time()
-                            duration = end_time -start_time
+                            duration = round(end_time -start_time,4)
                             start_time = time.time()
-                            print("%s / %s d = %s for t_max %s exp %s req.Fth %s S.Blk.Fth %s strg_C %s τ_coh %s delta_value %s **** "%(instance_counter,
+                            print("%s / %s d = %s for t_max %s exp %s req.Fth %s S.Blk.Fth %s stg_C %s τ_coh %s dlta %s "%(instance_counter,
                                                                         all_instances,duration,t_max,
                                                                           i,request_fidelity_threshold,
                                                                         storage_block_threshold,
