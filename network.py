@@ -27,8 +27,8 @@ class Network:
         return self.each_storage_block_delat_value_required_EPRs[j][b][delat_value]
         
     def set_required_EPR_pairs_each_storage_block_freshness(self):
-        for j in network.storage_pairs:
-            for b in network.each_storage_blocks[j]:
+        for j in self.storage_pairs:
+            for b in self.each_storage_blocks[j]:
                 f = 1/2+1/2*(np.exp(-2*delat_value/self.τ_coh))
                 F = self.each_storage_block_time_treshold[j][b][0]
                 W = (4*F-1)/3
