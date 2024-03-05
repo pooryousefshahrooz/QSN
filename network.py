@@ -18,17 +18,37 @@ class Network:
         self.set_of_paths  ={}
         self.each_storage_block_paths ={}
         self.each_storage_block_time_treshold = {}
+        self.each_storage_block_delat_value_required_EPRs = {}
         self.τ_coh = 10
         
+        
     
-    def each_storage_block_freshness(self,j,b,delat_value):
-        #return 1/2*(1-np.exp(-delat_value/self.τ_coh))
-    
-        f = 1/2+1/2*(np.exp(-2*delat_value/self.τ_coh))
-        F = self.each_storage_block_time_treshold[j][b][0]
-        W = (4*F-1)/3
-        Fe2e = W*f+(1-W)/4
-        return Fe2e
+    def get_each_storage_block_freshness(self,j,b,delat_value):
+        return self.each_storage_block_delat_value_required_EPRs[j][b][delat_value]
+        
+    def set_required_EPR_pairs_each_storage_block_freshness(self):
+        for j in network.storage_pairs:
+            for b in network.each_storage_blocks[j]:
+                f = 1/2+1/2*(np.exp(-2*delat_value/self.τ_coh))
+                F = self.each_storage_block_time_treshold[j][b][0]
+                W = (4*F-1)/3
+                decohered_fidelity = W*f+(1-W)/4
+                n_avg = self.get_avg_epr_pairs_DEJMPS(decohered_fidelity ,F)
+                try:
+                    self.each_storage_block_delat_value_required_EPRs[j][b][delat_value] =n_avg 
+                except:
+                    try:
+                        self.each_storage_block_delat_value_required_EPRs[j][b]={}
+                        self.each_storage_block_delat_value_required_EPRs[j][b][delat_value] =n_avg 
+                    except:
+                        self.each_storage_block_delat_value_required_EPRs[j]={}
+                        self.each_storage_block_delat_value_required_EPRs[j][b]={}
+                        self.each_storage_block_delat_value_required_EPRs[j][b][delat_value] = n_avg
+                
+                
+                
+                
+        
     def check_path_include_edge(self,edge,p):
         if edge in self.set_of_paths[p]:
             return True

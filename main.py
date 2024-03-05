@@ -104,6 +104,7 @@ for t_max in t_max_list:
                             network.each_storage_block_time_treshold[1][0][t]=storage_block_threshold
                 if storage_block_threshold not in network.fidelity_threshold_values:
                     network.fidelity_threshold_values.append(storage_block_threshold)
+                network.set_required_EPR_pairs_each_storage_block_freshness()
                 network.set_each_path_basic_fidelity(t_max,storage_block_threshold)
                 network.oracle_for_target_fidelity = {}
 #                 for path,b_f in network.each_path_basic_fidelity.items():
