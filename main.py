@@ -57,12 +57,12 @@ work_load = Work_load()
 results_file_path = "../QSN_resultsv2.csv"
 τ_coh_list = np.logspace(1,2,30)
 instance_counter = 0
-number_of_experiments = 800
+number_of_experiments = 400
 request_fidelity_thresholds = [0.9,0.8,0.94]
 storage_block_thresholds  = [0.7,0.9,0.95,0.8,0.85]
 storage_capacities = [i for i in range(100,500,100)]
 t_max_list = [t for t in range(10,50,10)]
-delta_values = [d for d in range(10,100,10)]
+delta_values = [d for d in range(10,100,50)]
 
 all_instances = (len(t_max_list)*number_of_experiments*
                  len(request_fidelity_thresholds)*
@@ -133,7 +133,7 @@ for t_max in t_max_list:
                             end_time = time.time()
                             duration = end_time -start_time
                             start_time = time.time()
-                            print("%s from %s duration = %s for t_max %s exp %s req.Fth %s S.Blk.Fth %s strg_C %s τ_coh %s delta_value %s **** "%(instance_counter,
+                            print("%s / %s d = %s for t_max %s exp %s req.Fth %s S.Blk.Fth %s strg_C %s τ_coh %s delta_value %s **** "%(instance_counter,
                                                                         all_instances,duration,t_max,
                                                                           i,request_fidelity_threshold,
                                                                         storage_block_threshold,
