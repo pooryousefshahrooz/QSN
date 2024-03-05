@@ -19,18 +19,26 @@ class Network:
         self.each_storage_block_paths ={}
         self.each_storage_block_time_treshold = {}
         self.τ_coh = 10
+        
+    
     def each_storage_block_freshness(self,j,b,delat_value):
-        return 1/2*(1-np.exp(-delat_value/self.τ_coh))
+        #return 1/2*(1-np.exp(-delat_value/self.τ_coh))
+    
+        f = 1/2+1/2*(np.exp(-2*delat_value/self.τ_coh))
+        F = self.each_storage_block_time_treshold[j][b][0]
+        W = (4*F-1)/3
+        Fe2e = W*f+(1-W)/4
+        return Fe2e
     def check_path_include_edge(self,edge,p):
         if edge in self.set_of_paths[p]:
             return True
         elif edge not  in self.set_of_paths[p]:
             return False
-    def set_each_path_basic_fidelity(self,storage_block_threshold):
+    def set_each_path_basic_fidelity(self,T,storage_block_threshold):
         
         self.each_path_basic_fidelity = {}
         for path,path_edges in self.set_of_paths.items():
-            if path in [0,1]:
+            if path in [0]:
                 if path_edges:
                     basic_fidelity = 1/4+(3/4)*(4*self.each_edge_fidelity[path_edges[0]]-1)/3
                     for edge in path_edges[1:]:
@@ -39,9 +47,33 @@ class Network:
                 else:
                     print("Error")
                     break
+            elif path==1:
+                if path_edges:
+                    basic_fidelity = 1/4+(3/4)*(4*self.each_edge_fidelity[path_edges[0]]-1)/3
+                    for edge in path_edges[1:]:
+                        basic_fidelity  = (basic_fidelity)*((4*self.each_edge_fidelity[edge]-1)/3)
+                    basic_fidelity = basic_fidelity
+                else:
+                    print("Error")
+                    break
+                    
+                storage_block_threshold = max(storage_block_threshold,basic_fidelity)
+                for t in range(0,T):
+                    try:
+                        self.each_storage_block_time_treshold[path][0][t]=storage_block_threshold
+                    except:
+                        try:
+                            self.each_storage_block_time_treshold[1][0][t]=storage_block_threshold
+                            self.each_storage_block_time_treshold[1][0][t]=storage_block_threshold
+                        except:
+                            self.each_storage_block_time_treshold[1]={}
+                            self.each_storage_block_time_treshold[1][0]={}
+                            self.each_storage_block_time_treshold[1][0][t]=storage_block_threshold
+                    
             else:
                 basic_fidelity = 1/4+(3/4)*(4*self.each_edge_fidelity[path_edges[0]]-1)/3
                 basic_fidelity  = (basic_fidelity)*((4*max(storage_block_threshold,self.each_path_basic_fidelity[1])-1)/3)
+                
                 basic_fidelity  = (basic_fidelity)*((4*self.each_edge_fidelity[5]-1)/3)
                 basic_fidelity = basic_fidelity
             self.each_path_basic_fidelity[path]= round(basic_fidelity,3)
