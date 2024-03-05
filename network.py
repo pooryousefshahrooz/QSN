@@ -133,7 +133,8 @@ class Network:
             except:
                 
                 for target in targets:
-                    n_avg = self.get_avg_epr_pairs(path_basic_fidelity ,target)
+#                     n_avg = self.get_avg_epr_pairs(path_basic_fidelity ,target)
+                    n_avg = self.get_avg_epr_pairs_DEJMPS(path_basic_fidelity ,target)
                     try:
                         self.global_each_basic_fidelity_target_fidelity_required_EPRs[path_basic_fidelity][target] =n_avg 
                     except:
