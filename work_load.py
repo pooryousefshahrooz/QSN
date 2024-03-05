@@ -26,10 +26,17 @@ class Work_load:
         self.each_t_each_request_demand = {}
         num_of_pairs= len(list(each_t_user_pairs[0]))
 #         tm = spike_tm(num_of_pairs+1,num_spikes,spike_mean,number_of_time_slots)
+        random_points = []
+        for i in range(num_spikes):
+            random_point = random.randint(0,number_of_time_slots-1)
+            random_points.append(random_point)
         for time in range(number_of_time_slots):
 #             traffic = tm.at_time(time)
 #             print("traffic",traffic)
-            demand = random.randint(1,spike_mean)
+            if time in random_points:
+                demand = random.randint(1,spike_mean)
+            else:
+                demand = 0
             try:
                 self.each_t_each_request_demand[time][0] = demand
             except:
