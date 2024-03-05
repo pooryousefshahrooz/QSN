@@ -45,7 +45,7 @@ network.each_storage_block_paths = {1:{0:[1]}}
 
 #Edge constraint
 network.set_E = [0,1,2,3,4,5]
-network.each_edge_capacity = {0:600,1:300,2:300,3:300,4:300,5:800}
+network.each_edge_capacity = {0:1200,1:600,2:600,3:600,4:600,5:1200}
 
 work_load = Work_load()
   
@@ -54,7 +54,7 @@ work_load = Work_load()
 # In[3]:
 
 
-results_file_path = "../QSN_resultsv3.csv"
+results_file_path = "../QSN_results_final.csv"
 τ_coh_list = np.logspace(1,2,20)
 instance_counter = 0
 number_of_experiments = 400
@@ -63,7 +63,7 @@ storage_block_thresholds  = [0.7,0.9,0.95,0.8,0.85]
 storage_capacities = [i for i in range(100,500,100)]
 t_max_list = [t for t in range(10,50,10)]
 delta_values = [d for d in range(2,20,2)]
-
+demand_max = 50
 all_instances = (len(t_max_list)*number_of_experiments*
                  len(request_fidelity_thresholds)*
                  len(storage_block_thresholds)*len(storage_capacities)*
@@ -112,7 +112,7 @@ for t_max in t_max_list:
 
                 # Demand constriant
                 work_load.each_t_each_request_demand = {}
-                work_load.set_each_user_pair_demands(len(work_load.T),work_load.each_t_user_pairs,100,2)
+                work_load.set_each_user_pair_demands(len(work_load.T),work_load.each_t_user_pairs,demand_max,2)
 #                 print("work_load.each_t_each_request_demand",work_load.each_t_each_request_demand)
                 for storage_capacity in storage_capacities:
                     for idx,τ_coh in enumerate(τ_coh_list):
@@ -127,7 +127,8 @@ for t_max in t_max_list:
                                                                       1000,i,True,storage_capacity,delta_value)
                             line_items = [t_max,i,request_fidelity_threshold,
                                           storage_block_threshold,
-                                          storage_capacity,τ_coh,delta_value,service_delay
+                                          storage_capacity,τ_coh,delta_value,service_delay,
+                                          network.each_edge_capacity,demand_max
                                          ]
                             with open(results_file_path, 'a') as newFile:                                
                                             newFileWriter = csv.writer(newFile)
