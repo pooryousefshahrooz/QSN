@@ -34,8 +34,9 @@ class Network:
                 F = self.each_storage_block_time_treshold[j][b][0]
                 W = (4*F-1)/3
                 decohered_fidelity = W*f+(1-W)/4
-                print("to go from %s to %s "%(decohered_fidelity,F))
-                time.sleep(4)
+                decohered_fidelity = max(decohered_fidelity,0.5)
+#                 print("to go from %s to %s "%(decohered_fidelity,F))
+#                 time.sleep(4)
                 n_avg = self.get_avg_epr_pairs_DEJMPS(decohered_fidelity ,F)
                 try:
                     self.each_storage_block_delat_value_required_EPRs[j][b][self.delta_value] =n_avg 
