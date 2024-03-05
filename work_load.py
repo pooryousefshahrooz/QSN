@@ -6,6 +6,7 @@
 
 # from tmgen.models import uniform_tm,spike_tm,modulated_gravity_tm,random_gravity_tm,gravity_tm,exp_tm
 import random
+eps = 1e-08
 
 # In[ ]:
 
@@ -36,7 +37,7 @@ class Work_load:
             if time in random_points:
                 demand = random.randint(1,spike_mean)
             else:
-                demand = 0
+                demand = 0 +eps
             try:
                 self.each_t_each_request_demand[time][0] = demand
             except:
