@@ -55,7 +55,7 @@ work_load = Work_load()
 
 
 results_file_path = "../QSN_resultsv2.csv"
-τ_coh_list = np.logspace(1,2,30)
+τ_coh_list = np.logspace(1,2,20)
 instance_counter = 0
 number_of_experiments = 400
 request_fidelity_thresholds = [0.9,0.8,0.94]
@@ -72,6 +72,9 @@ start_time = time.time()
 for t_max in t_max_list:
     for i in range(number_of_experiments):
         for request_fidelity_threshold in request_fidelity_thresholds:
+            if request_fidelity_threshold not in network.fidelity_threshold_values:
+                network.fidelity_threshold_values.append(request_fidelity_threshold)
+                    
             work_load.each_t_user_pairs={}
             work_load.T = []
             work_load.each_t_requests={}
@@ -98,11 +101,12 @@ for t_max in t_max_list:
                             network.each_storage_block_time_treshold[1]={}
                             network.each_storage_block_time_treshold[1][0]={}
                             network.each_storage_block_time_treshold[1][0][t]=storage_block_threshold
-                network.fidelity_threshold_values = [0.9,storage_block_threshold]
+                if storage_block_threshold not in network.fidelity_threshold_values:
+                    network.fidelity_threshold_values.append(storage_block_threshold)
                 network.set_each_path_basic_fidelity(storage_block_threshold)
                 network.oracle_for_target_fidelity = {}
-                for path,b_f in network.each_path_basic_fidelity.items():
-                    print(path,b_f)
+#                 for path,b_f in network.each_path_basic_fidelity.items():
+#                     print(path,b_f)
                         
                 network.set_required_EPR_pairs_for_each_path_each_fidelity_threshold()
 
@@ -144,7 +148,7 @@ for t_max in t_max_list:
 #                             time.sleep(30)
 
 
-# In[ ]:
+# In[4]:
 
 
 
