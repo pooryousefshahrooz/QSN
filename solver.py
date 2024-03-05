@@ -49,7 +49,7 @@ class Solver:
                     for b in network.each_storage_blocks[j]:
 #                         for p_s in network.each_request_real_paths[j,b]:
                         if cyclic_workload:
-                            opt_model.add_constraint(u_vars[j,b,t] == u_vars[j,b,(t-1)%len(work_load.T)]/network.each_storage_block_freshness(j,b,delat_value)-
+                            opt_model.add_constraint(u_vars[j,b,t] == u_vars[j,b,(t-1)%len(work_load.T)]/network.get_each_storage_block_freshness(j,b)-
                             opt_model.sum(w_vars[(t-1)%len(work_load.T),k,p] *
                             network.get_required_purification_EPR_pairs(p,work_load.get_each_request_threshold(network,k,b,t))
                             for k in work_load.each_t_requests[t] if k!=j 
@@ -57,7 +57,7 @@ class Solver:
                             +opt_model.sum(w_vars[(t-1)%len(work_load.T),j,p2] for p2 in network.each_storage_block_paths[j][b])*delat_value
                                                  ,ctname="inventory_evolution_{0}_{1}_{2}".format(t,j,b))
 #                         else:
-#                             opt_model.add_constraint(u_vars[t,j,b,p_s] == u_vars[t-1,j,b,p_s]/network.each_storage_block_freshness(j,b,delat_value)-
+#                             opt_model.add_constraint(u_vars[t,j,b,p_s] == u_vars[t-1,j,b,p_s]/network.get_each_storage_block_freshness(j,b)-
 #                             opt_model.sum(w_vars[t-1,k,p] *
 #                             network.get_required_purification_EPR_pairs(p,work_load.get_each_request_threshold(k,t))
 #                             for k in work_load.each_t_requests[t] if k!=j 
