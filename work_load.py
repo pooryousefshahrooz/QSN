@@ -4,7 +4,7 @@
 # In[ ]:
 
 
-# from tmgen.models import uniform_tm,spike_tm,modulated_gravity_tm,random_gravity_tm,gravity_tm,exp_tm
+from tmgen.models import uniform_tm,spike_tm,modulated_gravity_tm,random_gravity_tm,gravity_tm,exp_tm
 import random
 
 # In[ ]:
