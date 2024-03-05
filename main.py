@@ -54,7 +54,7 @@ work_load = Work_load()
 # In[3]:
 
 
-results_file_path = "../QSN_results_finalv2.csv"
+results_file_path = "../QSN_results_final_maximizing_rate.csv"
 τ_coh_list = np.logspace(1,2,20)
 instance_counter = 0
 number_of_experiments = 400
@@ -64,6 +64,7 @@ storage_capacities = [i for i in range(100,500,100)]
 t_max_list = [t for t in range(10,50,10)]
 delta_values = [d for d in range(2,20,2)]
 demand_max = 50
+feasibility_flag = False
 all_instances = (len(t_max_list)*number_of_experiments*
                  len(request_fidelity_thresholds)*
                  len(storage_block_thresholds)*len(storage_capacities)*
@@ -124,11 +125,13 @@ for t_max in t_max_list:
                             
                             solver =Solver()
                             service_delay = solver.request_service_delay_minimization(network,work_load,
-                                                                      1000,i,True,storage_capacity,delta_value)
+                                                                      1000,i,True,storage_capacity,delta_value,
+                                                                                     feasibility_flag)
                             line_items = [t_max,i,request_fidelity_threshold,
                                           storage_block_threshold,
                                           storage_capacity,τ_coh,delta_value,service_delay,
-                                          network.each_edge_capacity,demand_max
+                                          network.each_edge_capacity[1],demand_max,
+                                          feasibility_flag
                                          ]
                             with open(results_file_path, 'a') as newFile:                                
                                             newFileWriter = csv.writer(newFile)

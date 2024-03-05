@@ -25,7 +25,7 @@ from work_load import *
 class Solver:
     def __init__(self):
         pass
-    def request_service_delay_minimization(self,network,work_load,life_time,iteration,cyclic_workload,storage_capacity,delat_value):        
+    def request_service_delay_minimization(self,network,work_load,life_time,iteration,cyclic_workload,storage_capacity,delat_value,feasibility_flag):        
 
         import docplex.mp.model as cpx
         opt_model = cpx.Model(name="Storage problem model"+str(iteration))
@@ -102,12 +102,13 @@ class Solver:
                                          , ctname="inventory_serving_{0}_{1}_{2}".format(t,j,b))  
 
 
-        # Demand constriant
-        for t in work_load.T[1:]:
-            for k in  work_load.each_t_user_pairs[t]:
-                opt_model.add_constraint(opt_model.sum(w_vars[t,k,p]
-                for p in network.each_request_real_paths[k]+network.each_request_virtual_paths[k]) >= 
-                        work_load.each_t_each_request_demand[t][k], ctname="constraint_{0}_{1}".format(t,k))
+        if feasibility_flag:
+            # Demand constriant
+            for t in work_load.T[1:]:
+                for k in  work_load.each_t_user_pairs[t]:
+                    opt_model.add_constraint(opt_model.sum(w_vars[t,k,p]
+                    for p in network.each_request_real_paths[k]+network.each_request_virtual_paths[k]) >= 
+                            work_load.each_t_each_request_demand[t][k], ctname="constraint_{0}_{1}".format(t,k))
 
         #Edge constraint
         for t in work_load.T:
@@ -152,17 +153,25 @@ class Solver:
 #                             opt_model.add_constraint(u_vars[t,j,p_s] <=0, ctname="storage_capacity_constraint_{0}_{1}_{2}".format(t,j,p_s))
 
         """defining an objective, which is a linear expression"""
+        if feasibility_flag:
+            objective = opt_model.sum(1/len(work_load.T[1:])*1/len(work_load.each_t_real_requests[t])
+                                      *1/work_load.each_t_each_request_demand[t][k]
+                                      *(w_vars[t,k,p] * network.get_path_length(p)) for t in work_load.T[1:]
+                                      for k in work_load.each_t_user_pairs[t] 
+                                      for p in network.each_request_real_paths[k]+network.each_request_virtual_paths[k]
+                                      )
+            opt_model.minimize(objective)
+        else:
+            objective = opt_model.sum(1/len(work_load.T[1:])*1/len(work_load.each_t_real_requests[t])
+                                      
+                                      *(w_vars[t,k,p]) for t in work_load.T[1:]
+                                      for k in work_load.each_t_user_pairs[t] 
+                                      for p in network.each_request_real_paths[k]+network.each_request_virtual_paths[k]
+                                      )
+            opt_model.maximize(objective)
 
-        objective = opt_model.sum(1/len(work_load.T[1:])*1/len(work_load.each_t_real_requests[t])
-                                  *1/work_load.each_t_each_request_demand[t][k]
-                                  *(w_vars[t,k,p] * network.get_path_length(p)) for t in work_load.T[1:]
-                                  for k in work_load.each_t_user_pairs[t] 
-                                  for p in network.each_request_real_paths[k]+network.each_request_virtual_paths[k]
-                                  )
 
-
-
-        opt_model.minimize(objective)
+        
 
 #         opt_model.print_information()
 
