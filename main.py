@@ -58,11 +58,11 @@ results_file_path = "../QSN_resultsv2.csv"
 τ_coh_list = np.logspace(1,2,20)
 instance_counter = 0
 number_of_experiments = 400
-request_fidelity_thresholds = [0.9,0.8,0.94]
+request_fidelity_thresholds = [0.6,0.9,0.8,0.94]
 storage_block_thresholds  = [0.7,0.9,0.95,0.8,0.85]
 storage_capacities = [i for i in range(100,500,100)]
 t_max_list = [t for t in range(10,50,10)]
-delta_values = [d for d in range(10,100,50)]
+delta_values = [d for d in range(2,20,2)]
 
 all_instances = (len(t_max_list)*number_of_experiments*
                  len(request_fidelity_thresholds)*
