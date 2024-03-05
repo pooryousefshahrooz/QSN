@@ -23,8 +23,8 @@ class Network:
         
         
     
-    def get_each_storage_block_freshness(self,j,b,delat_value):
-        return self.each_storage_block_delat_value_required_EPRs[j][b][delat_value]
+    def get_each_storage_block_freshness(self,j,b):
+        return self.each_storage_block_delat_value_required_EPRs[j][b][self.delta_value]
         
     def set_required_EPR_pairs_each_storage_block_freshness(self):
         for j in self.storage_pairs:
