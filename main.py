@@ -45,7 +45,7 @@ network.each_storage_block_paths = {1:{0:[1]}}
 
 #Edge constraint
 network.set_E = [0,1,2,3,4,5]
-network.each_edge_capacity = {0:1200,1:600,2:600,3:600,4:600,5:1200}
+network.each_edge_capacity = {0:600,1:200,2:200,3:200,4:200,5:600}
 
 work_load = Work_load()
   
