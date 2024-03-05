@@ -35,15 +35,15 @@ class Network:
                 decohered_fidelity = W*f+(1-W)/4
                 n_avg = self.get_avg_epr_pairs_DEJMPS(decohered_fidelity ,F)
                 try:
-                    self.each_storage_block_delat_value_required_EPRs[j][b][delat_value] =n_avg 
+                    self.each_storage_block_delat_value_required_EPRs[j][b][self.delta_value] =n_avg 
                 except:
                     try:
                         self.each_storage_block_delat_value_required_EPRs[j][b]={}
-                        self.each_storage_block_delat_value_required_EPRs[j][b][delat_value] =n_avg 
+                        self.each_storage_block_delat_value_required_EPRs[j][b][self.delta_value] =n_avg 
                     except:
                         self.each_storage_block_delat_value_required_EPRs[j]={}
                         self.each_storage_block_delat_value_required_EPRs[j][b]={}
-                        self.each_storage_block_delat_value_required_EPRs[j][b][delat_value] = n_avg
+                        self.each_storage_block_delat_value_required_EPRs[j][b][self.delta_value] = n_avg
                 
                 
                 
