@@ -54,11 +54,23 @@ work_load = Work_load()
 # In[3]:
 
 
-results_file_path = "../QSN_results.csv"
+results_file_path = "../QSN_resultsv2.csv"
 τ_coh_list = np.logspace(1,2,30)
-for t_max in range(10,50,10):
-    for i in range(800):
-        for request_fidelity_threshold in [0.9,0.8,0.7,0.94]:
+instance_counter = 0
+number_of_experiments = 800
+request_fidelity_thresholds = [0.9,0.8,0.94]
+storage_block_thresholds  = [0.7,0.9,0.95,0.8,0.85]
+storage_capacities = [i for i in range(100,500,100)]
+t_max_list = [t for t in range(10,50,10)]
+delta_values = [d for d in range(10,100,10)]
+
+all_instances = (len(t_max_list)*number_of_experiments*
+                 len(request_fidelity_thresholds)*
+                 len(storage_block_thresholds)*len(storage_capacities)*
+                 len(τ_coh_list)*len(delta_values))
+for t_max in t_max_list:
+    for i in range(number_of_experiments):
+        for request_fidelity_threshold in request_fidelity_thresholds:
             work_load.each_t_user_pairs={}
             work_load.T = []
             work_load.each_t_requests={}
@@ -73,7 +85,7 @@ for t_max in range(10,50,10):
                     work_load.each_request_each_time_threshold[0][t]=request_fidelity_threshold
                 work_load.each_t_real_requests[t] = [0]
 
-            for storage_block_threshold in [0.7,0.8,0.85,0.9,0.95]:
+            for storage_block_threshold in storage_block_thresholds:
                 for t in range(0,t_max):
                     try:
                         network.each_storage_block_time_treshold[1][0][t]=storage_block_threshold
@@ -97,11 +109,12 @@ for t_max in range(10,50,10):
                 work_load.each_t_each_request_demand = {}
                 work_load.set_each_user_pair_demands(len(work_load.T),work_load.each_t_user_pairs,100,2)
 #                 print("work_load.each_t_each_request_demand",work_load.each_t_each_request_demand)
-                for storage_capacity in range(10,500,50):
+                for storage_capacity in storage_capacities:
                     for idx,τ_coh in enumerate(τ_coh_list):
                         network.τ_coh = τ_coh
-                        for delta_value in range(10,100,10):
-                            print("**** for t_max %s exp %s req.Fth %s S.Blk.Fth %s strg_C %s τ_coh %s delta_value %s **** "%(t_max,
+                        for delta_value in delta_values:
+                            print("**** %s from %s for t_max %s exp %s req.Fth %s S.Blk.Fth %s strg_C %s τ_coh %s delta_value %s **** "%(instance_counter,
+                                                                        all_instances,t_max,
                                                                           i,request_fidelity_threshold,
                                                                         storage_block_threshold,
                                                                         storage_capacity,
@@ -115,11 +128,13 @@ for t_max in range(10,50,10):
                                                                       1000,i,True,storage_capacity,delta_value)
                             line_items = [t_max,i,request_fidelity_threshold,
                                           storage_block_threshold,
-                                          storage_capacity,τ_coh,service_delay]
+                                          storage_capacity,τ_coh,delta_value,service_delay
+                                         ]
                             with open(results_file_path, 'a') as newFile:                                
                                             newFileWriter = csv.writer(newFile)
                                             newFileWriter.writerow([item for item in line_items])
                                         
+                            instance_counter+=1
 #                             time.sleep(30)
 
 
