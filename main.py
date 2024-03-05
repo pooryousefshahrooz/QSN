@@ -68,6 +68,7 @@ all_instances = (len(t_max_list)*number_of_experiments*
                  len(request_fidelity_thresholds)*
                  len(storage_block_thresholds)*len(storage_capacities)*
                  len(τ_coh_list)*len(delta_values))
+start_time = time.time()
 for t_max in t_max_list:
     for i in range(number_of_experiments):
         for request_fidelity_threshold in request_fidelity_thresholds:
@@ -113,13 +114,7 @@ for t_max in t_max_list:
                     for idx,τ_coh in enumerate(τ_coh_list):
                         network.τ_coh = τ_coh
                         for delta_value in delta_values:
-                            print("**** %s from %s for t_max %s exp %s req.Fth %s S.Blk.Fth %s strg_C %s τ_coh %s delta_value %s **** "%(instance_counter,
-                                                                        all_instances,t_max,
-                                                                          i,request_fidelity_threshold,
-                                                                        storage_block_threshold,
-                                                                        storage_capacity,
-                                                                    τ_coh,delta_value
-                                                                         ),end="\r")
+                            
 #                             for path,b_f in network.each_path_basic_fidelity.items():
 #                                 print(path,b_f,network.oracle_for_target_fidelity[path])
                             
@@ -135,6 +130,17 @@ for t_max in t_max_list:
                                             newFileWriter.writerow([item for item in line_items])
                                         
                             instance_counter+=1
+                            end_time = time.time()
+                            duration = end_time -start_time
+                            start_time = time.time()
+                            print("%s from %s duration = %s for t_max %s exp %s req.Fth %s S.Blk.Fth %s strg_C %s τ_coh %s delta_value %s **** "%(instance_counter,
+                                                                        all_instances,duration,t_max,
+                                                                          i,request_fidelity_threshold,
+                                                                        storage_block_threshold,
+                                                                        storage_capacity,
+                                                                    τ_coh,delta_value
+                                                                         ),end="\r")
+                            
 #                             time.sleep(30)
 
 
