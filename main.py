@@ -56,14 +56,14 @@ work_load = Work_load()
 
 results_file_path = "../QSN_results_final_maximizing_rate.csv"
 τ_coh_list = np.logspace(1,2,20)
-τ_coh_list = np.linspace(1,2,20)
+τ_coh_list = np.linspace(1,2,30)
 instance_counter = 0
 number_of_experiments = 1
 request_fidelity_thresholds = [0.6,0.9]
 storage_block_thresholds  = [0.7,0.9]
 storage_capacities = [i for i in range(400,800,400)]
 t_max_list = [t for t in range(10,100,10)]
-delta_values = [d for d in range(10,20,10)]
+delta_values = [d for d in range(2,30,2)]
 demand_max = 50
 feasibility_flag = False
 all_instances = (len(t_max_list)*number_of_experiments*
