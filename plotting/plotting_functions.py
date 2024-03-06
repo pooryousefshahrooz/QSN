@@ -476,7 +476,7 @@ def plotting_multi_scheme_two_y_axis(x_axis_label1,y_axis_label1,y_axis_label2,
 # In[51]:
 
 
-def plotting_2D(x_axix_label,y_axix_label,z_axis_label,
+def plotting_3D(x_axix_label,y_axix_label,z_axis_label,
                           x_axis_font_size, y_axis_font_size, x_axis_tick_font_size,
                           y_axis_tick_font_size, x_axis_pad, y_axis_pad,
                           x_min_value,y_axis_provided_min_value,
@@ -489,17 +489,17 @@ def plotting_2D(x_axix_label,y_axix_label,z_axis_label,
                           legend_font_size,plot_name,
                           having_mark_on_linkes_flag,given_marker_size,image_width,plot_height):
     import matplotlib.colors as colors
-#     plt = set_plotting_global_attributes(x_axix_label,y_axix_label,x_axis_font_size, 
-#                           y_axis_font_size, x_axis_tick_font_size,
-#                           y_axis_tick_font_size, x_axis_pad, y_axis_pad,
-#                                          image_width,plot_height)
+    plt = set_plotting_global_attributes(x_axix_label,y_axix_label,x_axis_font_size, 
+                          y_axis_font_size, x_axis_tick_font_size,
+                          y_axis_tick_font_size, x_axis_pad, y_axis_pad,
+                                         image_width,plot_height)
     
     def truncate_colormap(cmap, minval=0.0, maxval=1.0, n=100):
         new_cmap = colors.LinearSegmentedColormap.from_list(
             'trunc({n},{a:.2f},{b:.2f})'.format(n=cmap.name, a=minval, b=maxval),
             cmap(np.linspace(minval, maxval, n)))
         return new_cmap
-    import matplotlib.pyplot as plt
+#     import matplotlib.pyplot as plt
     plt.figure(figsize=(6,4))
     arr = np.linspace(0, 50, 100).reshape((10, 10))
 

@@ -71,6 +71,7 @@ class Network:
                 else:
                     print("Error")
                     break
+                
             elif path==1:
                 if path_edges:
                     basic_fidelity = 1/4+(3/4)*(4*self.each_edge_fidelity[path_edges[0]]-1)/3

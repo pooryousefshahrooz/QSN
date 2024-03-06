@@ -39,7 +39,7 @@ network.each_request_each_storage_each_block_paths = {0:
                                                       }}
 
 
-network.storage_pairs = [1]
+network.storage_pairs = [0]
 network.each_storage_blocks ={1:[0]} 
 network.each_storage_block_paths = {1:{0:[1]}}
 
@@ -57,14 +57,16 @@ work_load = Work_load()
 results_file_path = "../QSN_results_final_maximizing_rate.csv"
 τ_coh_list = np.logspace(1,2,20)
 τ_coh_list = np.linspace(1,80,80)
+τ_coh_list = [10]
 instance_counter = 0
 number_of_experiments = 1
-request_fidelity_thresholds = [0.6,0.9]
-storage_block_thresholds  = [0.7,0.9]
+request_fidelity_thresholds = [0.7]
+storage_block_thresholds  = [0.7]
 storage_capacities = [i for i in range(1000,2000,1000)]
 t_max_list = [t for t in range(20,40,20)]
 delta_values = [d for d in range(2,60,2)]
 delta_values = np.linspace(1,10,80)
+delta_values = [10]
 demand_max = 50
 feasibility_flag = False
 all_instances = (len(t_max_list)*number_of_experiments*
@@ -156,10 +158,13 @@ for t_max in t_max_list:
 #                             time.sleep(30)
 
 
-# In[4]:
+# In[5]:
 
 
+# n_avg = network.get_avg_epr_pairs_DEJMPS(0.6195366318079998 ,0.7)
 
+# w = 600/n_avg
+# print(w)
 
 # In[ ]:
 
