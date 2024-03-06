@@ -45,7 +45,7 @@ network.each_storage_block_paths = {1:{0:[1]}}
 
 #Edge constraint
 network.set_E = [0,1,2,3,4,5]
-network.each_edge_capacity = {0:600,1:400,2:400,3:400,4:400,5:600}
+network.each_edge_capacity = {0:600,1:200,2:200,3:200,4:200,5:600}
 
 work_load = Work_load()
   
@@ -56,7 +56,7 @@ work_load = Work_load()
 
 results_file_path = "../QSN_results_final_maximizing_rate.csv"
 τ_coh_list = np.logspace(1,2,20)
-τ_coh_list = np.linspace(1,40,40)
+τ_coh_list = np.linspace(1,80,80)
 instance_counter = 0
 number_of_experiments = 1
 request_fidelity_thresholds = [0.6,0.9]
