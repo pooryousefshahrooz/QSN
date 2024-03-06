@@ -39,7 +39,7 @@ network.each_request_each_storage_each_block_paths = {0:
                                                       }}
 
 
-network.storage_pairs = [0]
+network.storage_pairs = [1]
 network.each_storage_blocks ={1:[0]} 
 network.each_storage_block_paths = {1:{0:[1]}}
 
