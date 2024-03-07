@@ -60,8 +60,8 @@ results_file_path = "../QSN_results_final_maximizing_rate.csv"
 τ_coh_list = [10]
 instance_counter = 0
 number_of_experiments = 1
-request_fidelity_thresholds = [0.7]
-storage_block_thresholds  = [0.7]
+request_fidelity_thresholds = [0.9]
+storage_block_thresholds  = [0.9]
 storage_capacities = [i for i in range(400,800,400)]
 t_max_list = [t for t in range(20,40,20)]
 delta_values = [d for d in range(2,60,2)]
@@ -158,13 +158,13 @@ for t_max in t_max_list:
 #                             time.sleep(30)
 
 
-# In[5]:
+# In[8]:
 
 
-# n_avg = network.get_avg_epr_pairs_DEJMPS(0.6195366318079998 ,0.7)
-
-# w = 600/n_avg
-# print(w)
+n_avg = network.get_avg_epr_pairs_DEJMPS(0.6195366318079998 ,0.9)
+print(n_avg)
+w = 200/n_avg
+print(w)
 
 # In[ ]:
 
