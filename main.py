@@ -65,8 +65,8 @@ storage_block_thresholds  = [0.7]
 storage_capacities = [i for i in range(400,800,400)]
 t_max_list = [t for t in range(20,40,20)]
 delta_values = [d for d in range(2,60,2)]
-delta_values = np.linspace(1,10,80)
-delta_values = [18]
+delta_values = np.linspace(1,200,80)
+# delta_values = [18]
 demand_max = 50
 feasibility_flag = False
 all_instances = (len(t_max_list)*number_of_experiments*
@@ -158,7 +158,7 @@ for t_max in t_max_list:
 #                             time.sleep(30)
 
 
-# In[10]:
+# In[11]:
 
 
 n_avg = network.get_avg_epr_pairs_DEJMPS(0.6195366318079998 ,0.9)

@@ -204,9 +204,9 @@ class Network:
                     except:
                         self.oracle_for_target_fidelity[path] = {}
                         self.oracle_for_target_fidelity[path][target] = n_avg
-            for path,target_n_avg in self.oracle_for_target_fidelity.items():
-                for F,n_avg in target_n_avg.items():
-                    print("for path from fidleity %s to %s needs %s "%(path,F,n_avg))
+#             for path,target_n_avg in self.oracle_for_target_fidelity.items():
+#                 for F,n_avg in target_n_avg.items():
+#                     print("for path %s to target %s need %s "%(path,F,n_avg))
                         
     def get_avg_epr_pairs_DEJMPS(self,F_init,F_target):
         F_curr = F_init
