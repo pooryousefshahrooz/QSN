@@ -120,7 +120,8 @@ for t_max in t_max_list:
                 for p,Fth_n_avg in network.oracle_for_target_fidelity.items():
                     for Fth,n_avg in Fth_n_avg.items():
                         if Fth ==request_fidelity_threshold:
-                            print("for path %s storage Fth %s we need %s "%(p,storage_block_threshold,n_avg))
+                            print("for path %s basic fidleity %s storage Fth %s we need %s "%(p,network.each_path_basic_fidelity[p],
+                                                                                              storage_block_threshold,n_avg))
                 time.sleep(5)
                 # Demand constriant
                 work_load.each_t_each_request_demand = {}
