@@ -173,26 +173,26 @@ class Solver:
 
 #         opt_model.print_information()
         opt_model.solve()
-#         print("docplex.mp.solution",opt_model.solution)
-#         for t in work_load.T[-1:]:
-#             for k in work_load.each_t_user_pairs[t]:
-#                 for p in network.each_request_real_paths[k]+network.each_request_virtual_paths[k]:
-#                     print("the rate of the last time interval rate for path %s is %s "%(p,w_vars[t,k,p].solution_value))
+        print("docplex.mp.solution",opt_model.solution)
+        for t in work_load.T[-1:]:
+            for k in work_load.each_t_user_pairs[t]:
+                for p in network.each_request_real_paths[k]+network.each_request_virtual_paths[k]:
+                    print("the rate of the last time interval rate for path %s is %s "%(p,w_vars[t,k,p].solution_value))
 
                     
-#         for t in work_load.T[-1:]:
-#             for edge in network.set_E:
-#                 edge_sum = 0
-#                 for k in work_load.each_t_user_pairs[t]:
-#                     for p in network.each_request_real_paths[k]+network.each_request_virtual_paths[k]:
-#                         if network.check_path_include_edge(edge,p):
-#                             edge_sum+= w_vars[t,k,p].solution_value* network.get_required_purification_EPR_pairs(p,work_load.get_each_request_threshold(network,k,10,t))
-#                             print("for path %s rate is %s distillation %s product %s "%(p,w_vars[t,k,p].solution_value,network.get_required_purification_EPR_pairs(p,work_load.get_each_request_threshold(network,k,10,t)),w_vars[t,k,p].solution_value* network.get_required_purification_EPR_pairs(p,work_load.get_each_request_threshold(network,k,10,t))))
+        for t in work_load.T[-1:]:
+            for edge in network.set_E:
+                edge_sum = 0
+                for k in work_load.each_t_user_pairs[t]:
+                    for p in network.each_request_real_paths[k]+network.each_request_virtual_paths[k]:
+                        if network.check_path_include_edge(edge,p):
+                            edge_sum+= w_vars[t,k,p].solution_value* network.get_required_purification_EPR_pairs(p,work_load.get_each_request_threshold(network,k,10,t))
+                            print("for path %s rate is %s distillation %s product %s "%(p,w_vars[t,k,p].solution_value,network.get_required_purification_EPR_pairs(p,work_load.get_each_request_threshold(network,k,10,t)),w_vars[t,k,p].solution_value* network.get_required_purification_EPR_pairs(p,work_load.get_each_request_threshold(network,k,10,t))))
                 
 
-#                 print("for edge %s we have load %s its capacity is %s "%(edge,edge_sum,network.each_edge_capacity[edge]))
+                print("for edge %s we have load %s its capacity is %s "%(edge,edge_sum,network.each_edge_capacity[edge]))
                     
-#         time.sleep(3)
+        time.sleep(3)
 #         import pdb
 #         pdb.set_trace()
         objective_value = -1
