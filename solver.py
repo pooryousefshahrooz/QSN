@@ -190,7 +190,7 @@ class Solver:
                             print("for path %s rate is %s "%(p,w_vars[t,k,p].solution_value))
                 
 
-            print("for edge %s we have load %s its capacity is %s "%(edge,edge_sum,network.each_edge_capacity[edge]))
+                print("for edge %s we have load %s its capacity is %s "%(edge,edge_sum,network.each_edge_capacity[edge]))
                     
         time.sleep(3)
 #         import pdb
