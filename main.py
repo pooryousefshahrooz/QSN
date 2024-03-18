@@ -54,7 +54,7 @@ work_load = Work_load()
 # In[3]:
 
 
-results_file_path = "../QSN_results_final_maximizing_rate_doceherence_assumption.csv"
+results_file_path = "../QSN_results_final_maximizing_rate_doceherence_assumption_final.csv"
 τ_coh_list = np.logspace(1,2,20)
 τ_coh_list = np.linspace(1,100,100)
 τ_coh_list = [40,10]
@@ -117,12 +117,12 @@ for t_max in t_max_list:
 #                     print(path,b_f)
                         
                 network.set_required_EPR_pairs_for_each_path_each_fidelity_threshold()
-                for p,Fth_n_avg in network.oracle_for_target_fidelity.items():
-                    for Fth,n_avg in Fth_n_avg.items():
-                        if Fth ==request_fidelity_threshold:
-                            print("for path %s basic fidleity %s storage Fth %s we need %s "%(p,network.each_path_basic_fidelity[p],
-                                                                                              storage_block_threshold,n_avg))
-                time.sleep(5)
+#                 for p,Fth_n_avg in network.oracle_for_target_fidelity.items():
+#                     for Fth,n_avg in Fth_n_avg.items():
+#                         if Fth ==request_fidelity_threshold:
+#                             print("for path %s basic fidleity %s storage Fth %s we need %s "%(p,network.each_path_basic_fidelity[p],
+#                                                                                               storage_block_threshold,n_avg))
+#                 time.sleep(5)
                 # Demand constriant
                 work_load.each_t_each_request_demand = {}
                 work_load.set_each_user_pair_demands(len(work_load.T),work_load.each_t_user_pairs,demand_max,2)
@@ -163,13 +163,13 @@ for t_max in t_max_list:
                                 start_time = time.time()
                                 since_initial = round(end_time -initial_time,4)
                                 
-#                                 print("%s / %s d = %s (passed %s) for t_max %s exp %s req.Fth %s S.Blk.Fth %s stg_C %s τ_coh %s dlta %s "%(instance_counter,
-#                                                                             all_instances,duration,since_initial,t_max,
-#                                                                               i,request_fidelity_threshold,
-#                                                                             storage_block_threshold,
-#                                                                             storage_capacity,
-#                                                                         round(τ_coh,3),delta_value
-#                                                                              ),end="\r")
+                                print("%s / %s d = %s (passed %s) for t_max %s exp %s req.Fth %s S.Blk.Fth %s stg_C %s τ_coh %s dlta %s "%(instance_counter,
+                                                                            all_instances,duration,since_initial,t_max,
+                                                                              i,request_fidelity_threshold,
+                                                                            storage_block_threshold,
+                                                                            storage_capacity,
+                                                                        round(τ_coh,3),delta_value
+                                                                             ),end="\r")
 
     #                             time.sleep(30)
 
