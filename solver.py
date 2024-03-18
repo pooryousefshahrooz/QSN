@@ -187,7 +187,7 @@ class Solver:
                     for p in network.each_request_real_paths[k]+network.each_request_virtual_paths[k]:
                         if network.check_path_include_edge(edge,p):
                             edge_sum+= w_vars[t,k,p].solution_value* network.get_required_purification_EPR_pairs(p,work_load.get_each_request_threshold(network,k,10,t))
-                            print("for path %s rate is %s "%(p,w_vars[t,k,p].solution_value))
+                            print("for path %s rate is %s distillation %s "%(p,w_vars[t,k,p].solution_value,w_vars[t,k,p].solution_value* network.get_required_purification_EPR_pairs(p,work_load.get_each_request_threshold(network,k,10,t))))
                 
 
                 print("for edge %s we have load %s its capacity is %s "%(edge,edge_sum,network.each_edge_capacity[edge]))
