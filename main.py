@@ -30,7 +30,7 @@ from solver import *
 network = Network()
 network.set_of_paths = {0:[0,1,2,3,4,5],1:[1,2,3],2:[0,5]}
 network.each_edge_fidelity = {0:0.94,1:0.94,2:0.94,3:0.94,4:0.94,5:0.94}
-network.max_edge_capacity =800
+
 network.each_request_real_paths = {0:[0],1:[1]}
 network.each_request_virtual_paths = {0:[2],1:[]}
 network.each_request_each_storage_each_block_paths = {0:
@@ -46,7 +46,7 @@ network.each_storage_block_paths = {1:{0:[1]}}
 #Edge constraint
 network.set_E = [0,1,2,3,4,5]
 network.each_edge_capacity = {0:4000,1:500,2:500,3:500,4:500,5:4000}
-
+network.max_edge_capacity =network.each_edge_capacity[0]
 work_load = Work_load()
   
 
