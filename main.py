@@ -73,7 +73,7 @@ feasibility_flag = False
 all_instances = (len(t_max_list)*number_of_experiments*
                  len(request_fidelity_thresholds)*
                  len(storage_block_thresholds)*len(storage_capacities)*
-                 len(τ_coh_list)*len(delta_values))
+                 len(τ_coh_list)*len(delta_values)*2)
 start_time = time.time()
 initial_time = time.time()
 for t_max in t_max_list:
@@ -117,7 +117,11 @@ for t_max in t_max_list:
 #                     print(path,b_f)
                         
                 network.set_required_EPR_pairs_for_each_path_each_fidelity_threshold()
-
+                for p,Fth_n_avg in network.oracle_for_target_fidelity.items():
+                    for Fth,n_avg in Fth_n_avg.items():
+                        if Fth ==request_fidelity_threshold:
+                            print("for path %s storage Fth %s we need %s "%(p,storage_block_threshold,n_avg))
+                time.sleep(5)
                 # Demand constriant
                 work_load.each_t_each_request_demand = {}
                 work_load.set_each_user_pair_demands(len(work_load.T),work_load.each_t_user_pairs,demand_max,2)
