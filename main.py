@@ -54,9 +54,9 @@ work_load = Work_load()
 # In[3]:
 
 
-results_file_path = "../QSN_results_final_maximizing_rate_doceherence_assumption_finalv2.csv"
+results_file_path = "../QSN_results_final_maximizing_rate_doceherence_assumption_finalv3.csv"
 τ_coh_list = np.logspace(1,2,20)
-τ_coh_list = np.linspace(1,100,50)
+τ_coh_list = np.linspace(1,100,10)
 # τ_coh_list = [40]
 instance_counter = 0
 number_of_experiments = 1
@@ -64,7 +64,7 @@ request_fidelity_thresholds = [0.9,0.94]
 storage_block_thresholds  = [0.7,0.8,0.85,0.9,0.94,0.96]
 storage_block_thresholds = np.linspace(0.9,0.9,1)
 storage_capacities = [i for i in range(1000,2000,1000)]
-t_max_list = [t for t in range(10,20,10)]
+t_max_list = [t for t in range(5,10,5)]
 delta_values = [d for d in range(2,60,2)]
 delta_values = np.linspace(1,10,50)
 delta_values = [10.693877551020408]
@@ -151,7 +151,7 @@ for t_max in t_max_list:
                                               storage_block_threshold,
                                               storage_capacity,τ_coh,delta_value,service_delay,
                                               network.each_edge_capacity[1],demand_max,
-                                              feasibility_flag,freshness_assumption
+                                              feasibility_flag,freshness_assumption,network.each_edge_capacity[0]
                                              ]
                                 with open(results_file_path, 'a') as newFile:                                
                                                 newFileWriter = csv.writer(newFile)
