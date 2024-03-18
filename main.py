@@ -54,7 +54,7 @@ work_load = Work_load()
 # In[3]:
 
 
-results_file_path = "../QSN_results_final_maximizing_rate_doceherence_assumption_finalv4.csv"
+results_file_path = "../QSN_results_final_maximizing_rate_doceherence_assumption_finalv5.csv"
 τ_coh_list = np.logspace(1,2,20)
 τ_coh_list = np.linspace(1,100,10)
 # τ_coh_list = [40]
