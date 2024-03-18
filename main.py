@@ -162,13 +162,13 @@ for t_max in t_max_list:
                                 start_time = time.time()
                                 since_initial = round(end_time -initial_time,4)
                                 
-                                print("%s / %s d = %s (passed %s) for t_max %s exp %s req.Fth %s S.Blk.Fth %s stg_C %s τ_coh %s dlta %s "%(instance_counter,
-                                                                            all_instances,duration,since_initial,t_max,
-                                                                              i,request_fidelity_threshold,
-                                                                            storage_block_threshold,
-                                                                            storage_capacity,
-                                                                        round(τ_coh,3),delta_value
-                                                                             ),end="\r")
+#                                 print("%s / %s d = %s (passed %s) for t_max %s exp %s req.Fth %s S.Blk.Fth %s stg_C %s τ_coh %s dlta %s "%(instance_counter,
+#                                                                             all_instances,duration,since_initial,t_max,
+#                                                                               i,request_fidelity_threshold,
+#                                                                             storage_block_threshold,
+#                                                                             storage_capacity,
+#                                                                         round(τ_coh,3),delta_value
+#                                                                              ),end="\r")
 
     #                             time.sleep(30)
 
