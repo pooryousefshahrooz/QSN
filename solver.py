@@ -178,7 +178,8 @@ class Solver:
         opt_model.solve()
 
 
-#         print('docplex.mp.solution',opt_model.solution)
+        print("docplex.mp.solution",opt_model.solution)
+        time.sleep(3)
 #         import pdb
 #         pdb.set_trace()
         objective_value = -1
