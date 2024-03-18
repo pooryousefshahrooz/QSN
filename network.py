@@ -20,6 +20,7 @@ class Network:
         self.each_storage_block_paths ={}
         self.each_storage_block_time_treshold = {}
         self.each_storage_block_delat_value_required_EPRs = {}
+        self.freshness_assumption = "worst"
         self.τ_coh = 10
         
         
@@ -30,7 +31,10 @@ class Network:
     def set_required_EPR_pairs_each_storage_block_freshness(self):
         for j in self.storage_pairs:
             for b in self.each_storage_blocks[j]:
-                f = 1/2+1/2*(np.exp(-2*self.delta_value/self.τ_coh))
+                if self.freshness_assumption =="worst":
+                    f = 1/2+1/2*(np.exp(-2*self.delta_value/self.τ_coh))
+                else:
+                    f = 1/2+1/2*(np.exp(-2*(self.delta_value/2)/self.τ_coh))
                 F = self.each_storage_block_time_treshold[j][b][0]
                 W = (4*F-1)/3
                 decohered_fidelity = W*f+(1-W)/4

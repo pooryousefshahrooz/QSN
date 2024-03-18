@@ -45,7 +45,7 @@ network.each_storage_block_paths = {1:{0:[1]}}
 
 #Edge constraint
 network.set_E = [0,1,2,3,4,5]
-network.each_edge_capacity = {0:1200,1:600,2:600,3:600,4:600,5:1200}
+network.each_edge_capacity = {0:400,1:200,2:200,3:200,4:200,5:400}
 
 work_load = Work_load()
   
@@ -54,18 +54,18 @@ work_load = Work_load()
 # In[3]:
 
 
-results_file_path = "../QSN_results_final_maximizing_rate.csv"
+results_file_path = "../QSN_results_final_maximizing_rate_doceherence_assumption.csv"
 τ_coh_list = np.logspace(1,2,20)
-τ_coh_list = np.linspace(1,80,80)
-τ_coh_list = [40,10,80]
+τ_coh_list = np.linspace(1,100,100)
+# τ_coh_list = [40,10,80]
 instance_counter = 0
 number_of_experiments = 1
-request_fidelity_thresholds = [0.9,0.94,0.8]
-storage_block_thresholds  = [0.7,0.9,0.94]
-storage_capacities = [i for i in range(400,800,400)]
+request_fidelity_thresholds = [0.9,0.7,0.94,0.8]
+storage_block_thresholds  = [0.7,0.8,0.85,0.9,0.94,0.96]
+storage_capacities = [i for i in range(1000,2000,1000)]
 t_max_list = [t for t in range(20,40,20)]
 delta_values = [d for d in range(2,60,2)]
-delta_values = np.linspace(1,40,160)
+delta_values = np.linspace(1,20,50)
 # delta_values = [18]
 demand_max = 50
 feasibility_flag = False
@@ -125,41 +125,44 @@ for t_max in t_max_list:
                         network.τ_coh = τ_coh
                         for delta_value in delta_values:
                             network.delta_value  =delta_value
-                            network.set_required_EPR_pairs_each_storage_block_freshness()
-#                             for path,b_f in network.each_path_basic_fidelity.items():
-#                                 print(path,b_f,network.oracle_for_target_fidelity[path])
                             
-                            solver =Solver()
-#                             service_delay = solver.request_service_delay_minimization(network,work_load,
-#                                                                       1000,i,True,storage_capacity,delta_value,
-#                                                                                      feasibility_flag)
-                            service_delay = solver.request_service_delay_minimization_discret(network,work_load,
-                                                                      1000,i,True,storage_capacity,delta_value,
-                                                                                     feasibility_flag)
-            
-                            line_items = [t_max,i,request_fidelity_threshold,
-                                          storage_block_threshold,
-                                          storage_capacity,τ_coh,delta_value,service_delay,
-                                          network.each_edge_capacity[1],demand_max,
-                                          feasibility_flag
-                                         ]
-                            with open(results_file_path, 'a') as newFile:                                
-                                            newFileWriter = csv.writer(newFile)
-                                            newFileWriter.writerow([item for item in line_items])
-                                        
-                            instance_counter+=1
-                            end_time = time.time()
-                            duration = round(end_time -start_time,4)
-                            start_time = time.time()
-                            print("%s / %s d = %s for t_max %s exp %s req.Fth %s S.Blk.Fth %s stg_C %s τ_coh %s dlta %s "%(instance_counter,
-                                                                        all_instances,duration,t_max,
-                                                                          i,request_fidelity_threshold,
-                                                                        storage_block_threshold,
-                                                                        storage_capacity,
-                                                                    round(τ_coh,3),delta_value
-                                                                         ),end="\r")
-                            
-#                             time.sleep(30)
+                            for freshness_assumption in ["worst","avg"]:
+                                network.freshness_assumption = freshness_assumption
+                                network.set_required_EPR_pairs_each_storage_block_freshness()
+    #                             for path,b_f in network.each_path_basic_fidelity.items():
+    #                                 print(path,b_f,network.oracle_for_target_fidelity[path])
+
+                                solver =Solver()
+    #                             service_delay = solver.request_service_delay_minimization(network,work_load,
+    #                                                                       1000,i,True,storage_capacity,delta_value,
+    #                                                                                      feasibility_flag)
+                                service_delay = solver.request_service_delay_minimization_discret(network,work_load,
+                                                                          1000,i,True,storage_capacity,delta_value,
+                                                                                         feasibility_flag)
+
+                                line_items = [t_max,i,request_fidelity_threshold,
+                                              storage_block_threshold,
+                                              storage_capacity,τ_coh,delta_value,service_delay,
+                                              network.each_edge_capacity[1],demand_max,
+                                              feasibility_flag,freshness_assumption
+                                             ]
+                                with open(results_file_path, 'a') as newFile:                                
+                                                newFileWriter = csv.writer(newFile)
+                                                newFileWriter.writerow([item for item in line_items])
+
+                                instance_counter+=1
+                                end_time = time.time()
+                                duration = round(end_time -start_time,4)
+                                start_time = time.time()
+                                print("%s / %s d = %s for t_max %s exp %s req.Fth %s S.Blk.Fth %s stg_C %s τ_coh %s dlta %s "%(instance_counter,
+                                                                            all_instances,duration,t_max,
+                                                                              i,request_fidelity_threshold,
+                                                                            storage_block_threshold,
+                                                                            storage_capacity,
+                                                                        round(τ_coh,3),delta_value
+                                                                             ),end="\r")
+
+    #                             time.sleep(30)
 
 
 # In[11]:
