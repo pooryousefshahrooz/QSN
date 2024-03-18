@@ -62,6 +62,7 @@ instance_counter = 0
 number_of_experiments = 1
 request_fidelity_thresholds = [0.7,0.94,0.8]
 storage_block_thresholds  = [0.7,0.8,0.85,0.9,0.94,0.96]
+storage_block_thresholds = np.linspace(0.7,0.99,20)
 storage_capacities = [i for i in range(1000,2000,1000)]
 t_max_list = [t for t in range(20,40,20)]
 delta_values = [d for d in range(2,60,2)]
