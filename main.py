@@ -54,7 +54,7 @@ work_load = Work_load()
 # In[3]:
 
 
-results_file_path = "../QSN_results_final_maximizing_rate_doceherence_assumption_final.csv"
+results_file_path = "../QSN_results_final_maximizing_rate_doceherence_assumption_finalv2.csv"
 τ_coh_list = np.logspace(1,2,20)
 τ_coh_list = np.linspace(1,100,50)
 # τ_coh_list = [40]
@@ -64,7 +64,7 @@ request_fidelity_thresholds = [0.9,0.94]
 storage_block_thresholds  = [0.7,0.8,0.85,0.9,0.94,0.96]
 storage_block_thresholds = np.linspace(0.9,0.9,1)
 storage_capacities = [i for i in range(1000,2000,1000)]
-t_max_list = [t for t in range(10,40,10)]
+t_max_list = [t for t in range(10,20,10)]
 delta_values = [d for d in range(2,60,2)]
 delta_values = np.linspace(1,10,50)
 delta_values = [10.693877551020408]
