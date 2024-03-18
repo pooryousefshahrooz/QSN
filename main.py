@@ -45,7 +45,7 @@ network.each_storage_block_paths = {1:{0:[1]}}
 
 #Edge constraint
 network.set_E = [0,1,2,3,4,5]
-network.each_edge_capacity = {0:2000,1:500,2:500,3:500,4:500,5:2000}
+network.each_edge_capacity = {0:4000,1:500,2:500,3:500,4:500,5:4000}
 
 work_load = Work_load()
   
@@ -64,7 +64,7 @@ request_fidelity_thresholds = [0.9,0.94]
 storage_block_thresholds  = [0.7,0.8,0.85,0.9,0.94,0.96]
 storage_block_thresholds = np.linspace(0.9,0.9,1)
 storage_capacities = [i for i in range(1000,2000,1000)]
-t_max_list = [t for t in range(20,40,20)]
+t_max_list = [t for t in range(10,40,10)]
 delta_values = [d for d in range(2,60,2)]
 delta_values = np.linspace(1,10,50)
 delta_values = [10.693877551020408]
