@@ -133,12 +133,12 @@ for t_max in t_max_list:
     #                                 print(path,b_f,network.oracle_for_target_fidelity[path])
 
                                 solver =Solver()
-    #                             service_delay = solver.request_service_delay_minimization(network,work_load,
-    #                                                                       1000,i,True,storage_capacity,delta_value,
-    #                                                                                      feasibility_flag)
-                                service_delay = solver.request_service_delay_minimization_discret(network,work_load,
+                                service_delay = solver.request_service_delay_minimization(network,work_load,
                                                                           1000,i,True,storage_capacity,delta_value,
                                                                                          feasibility_flag)
+#                                 service_delay = solver.request_service_delay_minimization_discret(network,work_load,
+#                                                                           1000,i,True,storage_capacity,delta_value,
+#                                                                                          feasibility_flag)
 
                                 line_items = [t_max,i,request_fidelity_threshold,
                                               storage_block_threshold,
