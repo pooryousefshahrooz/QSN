@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# In[3]:
 
 
 import networkx as nx
@@ -19,7 +19,7 @@ from network import *
 from work_load import *
 from solver import *
 
-# In[2]:
+# In[4]:
 
 
 #paths: 0:(0,1),(1,2),(2,3),(3,4),(4,5),
@@ -57,7 +57,7 @@ work_load = Work_load()
 results_file_path = "../QSN_results_final_maximizing_rate_doceherence_assumption.csv"
 τ_coh_list = np.logspace(1,2,20)
 τ_coh_list = np.linspace(1,100,100)
-# τ_coh_list = [40,10,80]
+τ_coh_list = [40,10,80]
 instance_counter = 0
 number_of_experiments = 1
 request_fidelity_thresholds = [0.7,0.94,0.8]
@@ -66,7 +66,7 @@ storage_capacities = [i for i in range(1000,2000,1000)]
 t_max_list = [t for t in range(20,40,20)]
 delta_values = [d for d in range(2,60,2)]
 delta_values = np.linspace(1,20,50)
-# delta_values = [18]
+delta_values = [40,60,20,10]
 demand_max = 50
 feasibility_flag = False
 all_instances = (len(t_max_list)*number_of_experiments*
@@ -168,12 +168,12 @@ for t_max in t_max_list:
     #                             time.sleep(30)
 
 
-# In[11]:
+# In[5]:
 
 
 n_avg = network.get_avg_epr_pairs_DEJMPS(0.6195366318079998 ,0.9)
 # print(n_avg)
-w = 600/n_avg
+w = 200/n_avg
 print(w)
 
 # In[ ]:
