@@ -177,7 +177,7 @@ class Solver:
 
         opt_model.solve()
 
-
+        print("this should be one and one ",1/len(work_load.T[1:]),1/len(work_load.each_t_real_requests[t]))
         print("docplex.mp.solution",opt_model.solution)
         time.sleep(3)
 #         import pdb
