@@ -252,7 +252,7 @@ def ploting_simple_y_as_x(x_axix_label,y_axix_label,
                          legends_on_the_right_flag):
     
  
-    colors = ['C0',"C0","C1", 'C1','C2','C2','C3','C3','C4','C5']
+    colors = ['C0',"C1",'C2','C3','C4','C5']
     style=[ 'solid', 'dashed','solid', 'dashed', 'solid', 'dashed','solid', 'dashed','solid', 'dashed']
     plt = set_plotting_global_attributes(x_axix_label,y_axix_label,x_axis_font_size, 
                           y_axis_font_size, x_axis_tick_font_size,
@@ -299,12 +299,12 @@ def ploting_simple_y_as_x(x_axix_label,y_axix_label,
         #print("these are the x and y axis values",Convergence_times,label_of_result)
         if having_mark_on_linkes_flag:
             plot(x_values_for_this_scheme, y_axis_values,colors[color_index],
-                 linestyle=style[index],marker=markers[index],markevery=(0.0,0.1),linewidth=2.0,
+                 linestyle=style[index],marker=markers[index],markevery=(0.0,0.1),linewidth=3.0,
                  markersize=given_marker_size,markerfacecolor='black',markeredgewidth='2', 
                  markeredgecolor=colors[color_index])
         else:
             plot(x_values_for_this_scheme, y_axis_values,colors[color_index],
-                 linestyle=style[index],markevery=(0.0,0.1),linewidth=2.0)
+                 linestyle=style[index],markevery=(0.0,0.1),linewidth=3.0)
             
 #         print("scheme %s x points %s      "%(scheme_key,x))
 #         print("scheme %s y_axis points %s "%(scheme_key,y_axis_values))
@@ -327,10 +327,10 @@ def ploting_simple_y_as_x(x_axix_label,y_axix_label,
     if log_scale:
         plt.yscale('log')
     if legend_flag:
-        plt.legend([label for label in my_class_labels ],handlelength=1.0,fontsize=legend_font_size, ncol=legend_num_column,handleheight=2.4, labelspacing=0.02)
+        plt.legend([label for label in my_class_labels ],handlelength=2.0,fontsize=legend_font_size, ncol=legend_num_column,handleheight=2.6, labelspacing=0.02)
     if legends_on_the_right_flag:
         ax = plt.subplot(111)
-        ax.legend([label for label in my_class_labels ],handlelength=1.0,fontsize=legend_font_size,loc='center left', bbox_to_anchor=(1, 0.5))
+        ax.legend([label for label in my_class_labels ],handlelength=2.0,fontsize=legend_font_size,loc='center left', bbox_to_anchor=(1, 0.5))
         # ax.xticks(np.arange(min(x_values_for_this_scheme), max(x_values_for_this_scheme)+1, 0.1))
     plt.ylim(y_axis_provided_min_value, y_axis_provided_max_value)
     plt.minorticks_on()
