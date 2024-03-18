@@ -169,7 +169,7 @@ for t_max in t_max_list:
                                                                             storage_block_threshold,
                                                                             storage_capacity,
                                                                         round(τ_coh,3),delta_value
-                                                                             ),end="\r")
+                                                                             ),end="\n")
 
     #                             time.sleep(30)
 
