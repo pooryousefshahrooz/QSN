@@ -162,9 +162,7 @@ class Solver:
                                       )
             opt_model.minimize(objective)
         else:
-            objective = opt_model.sum(1/len(work_load.T[1:])*1/len(work_load.each_t_real_requests[t])
-                                      
-                                      *(w_vars[t,k,p]) for t in work_load.T[1:]
+            objective = opt_model.sum((w_vars[t,k,p]) for t in work_load.T[-1:]
                                       for k in work_load.each_t_user_pairs[t] 
                                       for p in network.each_request_real_paths[k]+network.each_request_virtual_paths[k]
                                       )
@@ -176,8 +174,6 @@ class Solver:
 #         opt_model.print_information()
 
         opt_model.solve()
-
-        print("this should be one and one ",1/len(work_load.T[1:]),1/len(work_load.each_t_real_requests[t]))
         print("docplex.mp.solution",opt_model.solution)
         time.sleep(3)
 #         import pdb

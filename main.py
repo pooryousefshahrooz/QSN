@@ -54,7 +54,7 @@ work_load = Work_load()
 # In[3]:
 
 
-results_file_path = "../QSN_results_final_maximizing_rate_doceherence_assumption_finalv3.csv"
+results_file_path = "../QSN_results_final_maximizing_rate_doceherence_assumption_finalv4.csv"
 τ_coh_list = np.logspace(1,2,20)
 τ_coh_list = np.linspace(1,100,10)
 # τ_coh_list = [40]
@@ -133,7 +133,7 @@ for t_max in t_max_list:
                         for delta_value in delta_values:
                             network.delta_value  =delta_value
                             
-                            for freshness_assumption in ["worst","avg"]:
+                            for freshness_assumption in ["worst"]:
                                 network.freshness_assumption = freshness_assumption
                                 network.set_required_EPR_pairs_each_storage_block_freshness()
     #                             for path,b_f in network.each_path_basic_fidelity.items():
