@@ -74,6 +74,7 @@ all_instances = (len(t_max_list)*number_of_experiments*
                  len(storage_block_thresholds)*len(storage_capacities)*
                  len(τ_coh_list)*len(delta_values))
 start_time = time.time()
+initial_time = time.time()
 for t_max in t_max_list:
     for i in range(number_of_experiments):
         for request_fidelity_threshold in request_fidelity_thresholds:
@@ -154,8 +155,10 @@ for t_max in t_max_list:
                                 end_time = time.time()
                                 duration = round(end_time -start_time,4)
                                 start_time = time.time()
-                                print("%s / %s d = %s for t_max %s exp %s req.Fth %s S.Blk.Fth %s stg_C %s τ_coh %s dlta %s "%(instance_counter,
-                                                                            all_instances,duration,t_max,
+                                since_initial = round(end_time -initial_time,4)
+                                
+                                print("%s / %s d = %s (passed %s) for t_max %s exp %s req.Fth %s S.Blk.Fth %s stg_C %s τ_coh %s dlta %s "%(instance_counter,
+                                                                            all_instances,duration,since_initial,t_max,
                                                                               i,request_fidelity_threshold,
                                                                             storage_block_threshold,
                                                                             storage_capacity,
