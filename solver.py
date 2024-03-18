@@ -172,12 +172,14 @@ class Solver:
         
 
 #         opt_model.print_information()
+        opt_model.solve()
+        print("docplex.mp.solution",opt_model.solution)
         for t in work_load.T[-1:]:
             for k in work_load.each_t_user_pairs[t]:
                 for p in network.each_request_real_paths[k]+network.each_request_virtual_paths[k]:
                     print("the rate of the last time interval rate for path %s is %s "%(p,w_vars[t,k,p].solution_value))
-        opt_model.solve()
-        print("docplex.mp.solution",opt_model.solution)
+
+                    
         time.sleep(3)
 #         import pdb
 #         pdb.set_trace()
