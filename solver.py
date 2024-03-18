@@ -192,6 +192,19 @@ class Solver:
 
                 print("for edge %s we have load %s its capacity is %s "%(edge,edge_sum,network.each_edge_capacity[edge]))
                     
+                    
+                    
+        for t in work_load.T[1:]:
+            for j in network.storage_pairs:
+                for b in network.each_storage_blocks[j]:
+                    sum_served_from_storage = 0
+                    for k in work_load.each_t_user_pairs[t]:
+                        if k!=j:
+                            for p in network.each_request_each_storage_each_block_paths[k][j][b]:
+                                sum_served_from_storage +=w_vars[t,k,p].solution_value* network.get_required_purification_EPR_pairs(p,work_load.get_each_request_threshold(network,k,b,t))
+                    
+                    
+                    print("served from storage %s cannot be higher than %s "%(sum_served_from_storage*delat_value,u_vars[j,b,t].solution_value))
         time.sleep(3)
 #         import pdb
 #         pdb.set_trace()
