@@ -217,7 +217,7 @@ class Solver:
 
                         
                         
-                    print()
+                    
 #         time.sleep(10)
 #         import pdb
 #         pdb.set_trace()
