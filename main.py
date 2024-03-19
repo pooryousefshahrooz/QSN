@@ -61,7 +61,7 @@ results_file_path = "../QSN_results_final_maximizing_rate_doceherence_assumption
 instance_counter = 0
 number_of_experiments = 1
 request_fidelity_thresholds = [0.9]
-storage_block_thresholds  = [0.7,0.8,0.85,0.9,0.94,0.96]
+storage_block_thresholds  = [0.8678947368421053,0.8831578947368421,0.8984210526315789]
 storage_block_thresholds = np.linspace(0.7,0.99,20)
 storage_capacities = [i for i in range(20000,40000,20000)]
 t_max_list = [t for t in range(20,40,20)]
@@ -178,24 +178,24 @@ for t_max in t_max_list:
 # In[11]:
 
 
-delta_value = 2
-network= Network()
-for τ_coh in np.linspace(52,55,20):# [43,50,51.330769230769235,52.61212121212121]:
-    f = 1/2+1/2*(np.exp(-2*delta_value/τ_coh))
-    F = 0.9
-    W = (4*F-1)/3
-    decohered_fidelity = W*f+(1-W)/4
-    #decohered_fidelity = max(decohered_fidelity,0.5)
-    n_avg = network.get_avg_epr_pairs_DEJMPS(decohered_fidelity ,F)
-    print("for t_coh %s decohered_fidelity %s n_avg %s"%(τ_coh,decohered_fidelity,n_avg))
+# delta_value = 2
+# network= Network()
+# for τ_coh in np.linspace(52,55,20):# [43,50,51.330769230769235,52.61212121212121]:
+#     f = 1/2+1/2*(np.exp(-2*delta_value/τ_coh))
+#     F = 0.9
+#     W = (4*F-1)/3
+#     decohered_fidelity = W*f+(1-W)/4
+#     #decohered_fidelity = max(decohered_fidelity,0.5)
+#     n_avg = network.get_avg_epr_pairs_DEJMPS(decohered_fidelity ,F)
+#     print("for t_coh %s decohered_fidelity %s n_avg %s"%(τ_coh,decohered_fidelity,n_avg))
 
 
 
 
-n_avg = network.get_avg_epr_pairs_DEJMPS(0.6195366318079998 ,0.9)
-# print(n_avg)
-w = 200/n_avg
-print(w)
+# n_avg = network.get_avg_epr_pairs_DEJMPS(0.6195366318079998 ,0.9)
+# # print(n_avg)
+# w = 200/n_avg
+# print(w)
 
 # In[ ]:
 
