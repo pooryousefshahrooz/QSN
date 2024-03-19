@@ -56,7 +56,7 @@ work_load = Work_load()
 
 results_file_path = "../QSN_results_final_maximizing_rate_doceherence_assumption_finalv7.csv"
 τ_coh_list = np.logspace(1,2,20)
-τ_coh_list = np.linspace(0.1,10,30)
+τ_coh_list = np.linspace(0.1,100,40)
 # τ_coh_list = [40]
 instance_counter = 0
 number_of_experiments = 1
