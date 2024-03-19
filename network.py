@@ -21,6 +21,7 @@ class Network:
         self.each_storage_block_time_treshold = {}
         self.each_storage_block_delat_value_required_EPRs = {}
         self.freshness_assumption = "worst"
+        self.storage_capacity = 1
         self.τ_coh = 10
         
         

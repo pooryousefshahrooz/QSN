@@ -25,7 +25,7 @@ from work_load import *
 class Solver:
     def __init__(self):
         pass
-    def request_service_delay_minimization(self,network,work_load,life_time,iteration,cyclic_workload,storage_capacity,delat_value,feasibility_flag):        
+    def request_service_delay_minimization(self,network,work_load,life_time,iteration,cyclic_workload,feasibility_flag):        
 
         import docplex.mp.model as cpx
         opt_model = cpx.Model(name="Storage problem model"+str(iteration))
@@ -37,7 +37,7 @@ class Solver:
                    for k in work_load.each_t_user_pairs[t]+network.storage_pairs 
                    for p in network.each_request_real_paths[k]+network.each_request_virtual_paths[k]}
 #         print("w_vars",w_vars)
-        u_vars  = {(j,b,t): opt_model.continuous_var(lb=0, ub= network.max_edge_capacity,
+        u_vars  = {(j,b,t): opt_model.continuous_var(lb=0, ub= network.storage_capacity,
                                       name="u_{0}_{1}_{2}".format(j,b,t))  for t in work_load.T 
                        for j in network.storage_pairs for b in network.each_storage_blocks[j] 
                    }   
@@ -53,16 +53,16 @@ class Solver:
                             opt_model.sum(w_vars[(t-1)%len(work_load.T),k,p] *
                             network.get_required_purification_EPR_pairs(p,work_load.get_each_request_threshold(network,k,b,t))
                             for k in work_load.each_t_requests[t] if k!=j 
-                            for p in network.each_request_each_storage_each_block_paths[k][j][b])*delat_value
-                            +opt_model.sum(w_vars[(t-1)%len(work_load.T),j,p2] for p2 in network.each_storage_block_paths[j][b])*delat_value
+                            for p in network.each_request_each_storage_each_block_paths[k][j][b])*network.delat_value
+                            +opt_model.sum(w_vars[(t-1)%len(work_load.T),j,p2] for p2 in network.each_storage_block_paths[j][b])*network.delat_value
                                                  ,ctname="inventory_evolution_{0}_{1}_{2}".format(t,j,b))
 #                         else:
 #                             opt_model.add_constraint(u_vars[t,j,b,p_s] == u_vars[t-1,j,b,p_s]/network.get_each_storage_block_freshness(j,b)-
 #                             opt_model.sum(w_vars[t-1,k,p] *
 #                             network.get_required_purification_EPR_pairs(p,work_load.get_each_request_threshold(k,t))
 #                             for k in work_load.each_t_requests[t] if k!=j 
-#                             for p in network.each_request_virtual_paths_include_subpath[k][p_s])*delat_value
-#                             +opt_model.sum(w_vars[t-1,j,p_s])*delat_value
+#                             for p in network.each_request_virtual_paths_include_subpath[k][p_s])*network.delat_value
+#                             +opt_model.sum(w_vars[t-1,j,p_s])*network.delat_value
 #                                                  , ctname="inventory_evolution_{0}_{1}".format(t,j,p_s))
         else:
             #inventory evolution constraint
@@ -77,8 +77,8 @@ class Solver:
                                 network.get_required_purification_EPR_pairs(p,work_load.get_each_request_threshold(network,k,b,t))
                                 for k in work_load.each_t_requests[t] if k!=j 
                                 for p in network.each_request_each_storage_each_block_paths[k][j][b] 
-                                )*delat_value
-                                + opt_model.sum(w_vars[(t-1)%len(work_load.T),j,p_s])*delat_value
+                                )*network.delat_value
+                                + opt_model.sum(w_vars[(t-1)%len(work_load.T),j,p_s])*network.delat_value
                                                      , ctname="inventory_evolution_{0}_{1}".format(t,j,p_s))
                             else:
                                 opt_model.add_constraint(u_vars[j,b,t] == -
@@ -86,8 +86,8 @@ class Solver:
                                 network.get_required_purification_EPR_pairs(p,work_load.get_each_request_threshold(network,k,b,t))
                                 for k in work_load.each_t_requests[t] if k!=j 
                                 for p in network.each_request_each_storage_each_block_paths[k][j][b] 
-                                )*delat_value
-                                + opt_model.sum(w_vars[t-1,j,p_s])*delat_value
+                                )*network.delat_value
+                                + opt_model.sum(w_vars[t-1,j,p_s])*network.delat_value
                                                      , ctname="inventory_evolution_{0}_{1}".format(t,j,p_s))
 
         # serving from inventory constraint
@@ -98,7 +98,7 @@ class Solver:
                     network.get_required_purification_EPR_pairs(p,work_load.get_each_request_threshold(network,k,b,t))
                     for k in work_load.each_t_user_pairs[t] if k!=j 
                     for p in network.each_request_each_storage_each_block_paths[k][j][b]
-                    )*delat_value<=u_vars[j,b,t]
+                    )*network.delat_value<=u_vars[j,b,t]
                                          , ctname="inventory_serving_{0}_{1}_{2}".format(t,j,b))  
 
 
@@ -127,7 +127,7 @@ class Solver:
             #for s1 in network.storage_nodes:
             for j in network.storage_pairs:
                 opt_model.add_constraint(opt_model.sum(u_vars[j,b,t]
-                    for b in network.each_storage_blocks[j]) <= storage_capacity 
+                    for b in network.each_storage_blocks[j]) <= network.storage_capacity 
             , ctname="storage_capacity_constraint_{0}_{1}".format(t,j))
 
         # constraints for serving from storage at time zero and 1 should be zero
@@ -204,7 +204,7 @@ class Solver:
                                 sum_served_from_storage +=w_vars[t,k,p].solution_value* network.get_required_purification_EPR_pairs(p,work_load.get_each_request_threshold(network,k,b,t))
                     
                     
-                    print("served from storage %s cannot be higher than %s "%(sum_served_from_storage*delat_value,u_vars[j,b,t].solution_value))
+                    print("served from storage %s cannot be higher than %s "%(sum_served_from_storage*network.delat_value,u_vars[j,b,t].solution_value))
         time.sleep(3)
 #         import pdb
 #         pdb.set_trace()

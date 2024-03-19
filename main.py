@@ -128,6 +128,7 @@ for t_max in t_max_list:
                 work_load.set_each_user_pair_demands(len(work_load.T),work_load.each_t_user_pairs,demand_max,2)
 #                 print("work_load.each_t_each_request_demand",work_load.each_t_each_request_demand)
                 for storage_capacity in storage_capacities:
+                    network.storage_capacity = storage_capacity
                     for idx,τ_coh in enumerate(τ_coh_list):
                         network.τ_coh = τ_coh
                         for delta_value in delta_values:
@@ -141,7 +142,7 @@ for t_max in t_max_list:
 
                                 solver =Solver()
                                 service_delay = solver.request_service_delay_minimization(network,work_load,
-                                                                          1000,i,True,storage_capacity,delta_value,
+                                                                          1000,i,True,
                                                                                          feasibility_flag)
 #                                 service_delay = solver.request_service_delay_minimization_discret(network,work_load,
 #                                                                           1000,i,True,storage_capacity,delta_value,
