@@ -203,8 +203,8 @@ class Solver:
                             for p in network.each_request_each_storage_each_block_paths[k][j][b]:
                                 sum_served_from_storage +=w_vars[t,k,p].solution_value* network.get_required_purification_EPR_pairs(p,work_load.get_each_request_threshold(network,k,b,t))
                     
-                    
-#                     print("served from storage %s cannot be higher than %s "%(sum_served_from_storage*network.delta_value,u_vars[j,b,t].solution_value))
+                    if sum_served_from_storage>0:
+                        print("served from storage %s cannot be higher than %s "%(sum_served_from_storage*network.delta_value,u_vars[j,b,t].solution_value))
         time.sleep(3)
 #         import pdb
 #         pdb.set_trace()
