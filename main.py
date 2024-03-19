@@ -45,7 +45,7 @@ network.each_storage_block_paths = {1:{0:[1]}}
 
 #Edge constraint
 network.set_E = [0,1,2,3,4,5]
-network.each_edge_capacity = {0:4000,1:500,2:500,3:500,4:500,5:4000}
+network.each_edge_capacity = {0:4000,1:1000,2:1000,3:1000,4:1000,5:4000}
 network.max_edge_capacity =network.each_edge_capacity[0]
 work_load = Work_load()
   
@@ -54,20 +54,20 @@ work_load = Work_load()
 # In[3]:
 
 
-results_file_path = "../QSN_results_final_maximizing_rate_doceherence_assumption_finalv6.csv"
+results_file_path = "../QSN_results_final_maximizing_rate_doceherence_assumption_finalv7.csv"
 τ_coh_list = np.logspace(1,2,20)
-τ_coh_list = np.linspace(0.1,4,20)
+τ_coh_list = np.linspace(0.1,10,30)
 # τ_coh_list = [40]
 instance_counter = 0
 number_of_experiments = 1
 request_fidelity_thresholds = [0.9,0.94]
 storage_block_thresholds  = [0.7,0.8,0.85,0.9,0.94,0.96]
 storage_block_thresholds = np.linspace(0.9,0.9,1)
-storage_capacities = [i for i in range(10000,20000,10000)]
+storage_capacities = [i for i in range(20000,40000,20000)]
 t_max_list = [t for t in range(30,60,30)]
 delta_values = [d for d in range(2,60,2)]
 delta_values = np.linspace(1,10,50)
-delta_values = [2]
+delta_values = [2,4]
 demand_max = 50
 feasibility_flag = False
 all_instances = (len(t_max_list)*number_of_experiments*
