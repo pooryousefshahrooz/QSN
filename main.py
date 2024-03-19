@@ -56,7 +56,7 @@ work_load = Work_load()
 
 results_file_path = "../QSN_results_final_maximizing_rate_doceherence_assumption_finalv7.csv"
 τ_coh_list = np.logspace(1,2,20)
-τ_coh_list = np.linspace(0.1,100,40)
+τ_coh_list = np.linspace(0.1,400,100)
 # τ_coh_list = [40]
 instance_counter = 0
 number_of_experiments = 1
@@ -67,7 +67,7 @@ storage_capacities = [i for i in range(20000,40000,20000)]
 t_max_list = [t for t in range(30,60,30)]
 delta_values = [d for d in range(2,60,2)]
 delta_values = np.linspace(1,10,50)
-delta_values = [2,4]
+delta_values = [2,4,10,20]
 demand_max = 50
 feasibility_flag = False
 all_instances = (len(t_max_list)*number_of_experiments*
