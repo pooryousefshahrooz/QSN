@@ -134,7 +134,7 @@ for t_max in t_max_list:
                         for delta_value in delta_values:
                             network.delta_value  =delta_value
                             
-                            for freshness_assumption in ["avg"]:
+                            for freshness_assumption in ["worst"]:
                                 network.freshness_assumption = freshness_assumption
                                 network.set_required_EPR_pairs_each_storage_block_freshness()
     #                             for path,b_f in network.each_path_basic_fidelity.items():
