@@ -53,16 +53,16 @@ class Solver:
                             opt_model.sum(w_vars[(t-1)%len(work_load.T),k,p] *
                             network.get_required_purification_EPR_pairs(p,work_load.get_each_request_threshold(network,k,b,t))
                             for k in work_load.each_t_requests[t] if k!=j 
-                            for p in network.each_request_each_storage_each_block_paths[k][j][b])*network.delat_value
-                            +opt_model.sum(w_vars[(t-1)%len(work_load.T),j,p2] for p2 in network.each_storage_block_paths[j][b])*network.delat_value
+                            for p in network.each_request_each_storage_each_block_paths[k][j][b])*network.delta_value
+                            +opt_model.sum(w_vars[(t-1)%len(work_load.T),j,p2] for p2 in network.each_storage_block_paths[j][b])*network.delta_value
                                                  ,ctname="inventory_evolution_{0}_{1}_{2}".format(t,j,b))
 #                         else:
 #                             opt_model.add_constraint(u_vars[t,j,b,p_s] == u_vars[t-1,j,b,p_s]/network.get_each_storage_block_freshness(j,b)-
 #                             opt_model.sum(w_vars[t-1,k,p] *
 #                             network.get_required_purification_EPR_pairs(p,work_load.get_each_request_threshold(k,t))
 #                             for k in work_load.each_t_requests[t] if k!=j 
-#                             for p in network.each_request_virtual_paths_include_subpath[k][p_s])*network.delat_value
-#                             +opt_model.sum(w_vars[t-1,j,p_s])*network.delat_value
+#                             for p in network.each_request_virtual_paths_include_subpath[k][p_s])*network.delta_value
+#                             +opt_model.sum(w_vars[t-1,j,p_s])*network.delta_value
 #                                                  , ctname="inventory_evolution_{0}_{1}".format(t,j,p_s))
         else:
             #inventory evolution constraint
@@ -77,8 +77,8 @@ class Solver:
                                 network.get_required_purification_EPR_pairs(p,work_load.get_each_request_threshold(network,k,b,t))
                                 for k in work_load.each_t_requests[t] if k!=j 
                                 for p in network.each_request_each_storage_each_block_paths[k][j][b] 
-                                )*network.delat_value
-                                + opt_model.sum(w_vars[(t-1)%len(work_load.T),j,p_s])*network.delat_value
+                                )*network.delta_value
+                                + opt_model.sum(w_vars[(t-1)%len(work_load.T),j,p_s])*network.delta_value
                                                      , ctname="inventory_evolution_{0}_{1}".format(t,j,p_s))
                             else:
                                 opt_model.add_constraint(u_vars[j,b,t] == -
@@ -86,8 +86,8 @@ class Solver:
                                 network.get_required_purification_EPR_pairs(p,work_load.get_each_request_threshold(network,k,b,t))
                                 for k in work_load.each_t_requests[t] if k!=j 
                                 for p in network.each_request_each_storage_each_block_paths[k][j][b] 
-                                )*network.delat_value
-                                + opt_model.sum(w_vars[t-1,j,p_s])*network.delat_value
+                                )*network.delta_value
+                                + opt_model.sum(w_vars[t-1,j,p_s])*network.delta_value
                                                      , ctname="inventory_evolution_{0}_{1}".format(t,j,p_s))
 
         # serving from inventory constraint
@@ -98,7 +98,7 @@ class Solver:
                     network.get_required_purification_EPR_pairs(p,work_load.get_each_request_threshold(network,k,b,t))
                     for k in work_load.each_t_user_pairs[t] if k!=j 
                     for p in network.each_request_each_storage_each_block_paths[k][j][b]
-                    )*network.delat_value<=u_vars[j,b,t]
+                    )*network.delta_value<=u_vars[j,b,t]
                                          , ctname="inventory_serving_{0}_{1}_{2}".format(t,j,b))  
 
 
@@ -122,7 +122,7 @@ class Solver:
                      <= network.each_edge_capacity[edge], ctname="edge_capacity_{0}_{1}".format(t,edge))
 
         # storage servers capacity constraint
-    #     storage_capacity = storage_capacity/delat_value
+    #     storage_capacity = storage_capacity/delta_value
         for t in work_load.T:
             #for s1 in network.storage_nodes:
             for j in network.storage_pairs:
@@ -204,7 +204,7 @@ class Solver:
                                 sum_served_from_storage +=w_vars[t,k,p].solution_value* network.get_required_purification_EPR_pairs(p,work_load.get_each_request_threshold(network,k,b,t))
                     
                     
-                    print("served from storage %s cannot be higher than %s "%(sum_served_from_storage*network.delat_value,u_vars[j,b,t].solution_value))
+                    print("served from storage %s cannot be higher than %s "%(sum_served_from_storage*network.delta_value,u_vars[j,b,t].solution_value))
         time.sleep(3)
 #         import pdb
 #         pdb.set_trace()
