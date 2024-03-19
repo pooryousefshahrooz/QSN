@@ -213,7 +213,7 @@ class Solver:
                     if sum_served_from_storage>0:
                         print("served from storage %s cannot be higher than %s with fr(.) =%s "%(sum_served_from_storage*network.delta_value,
                                                                                                  u_vars[j,b,t].solution_value,
-                                                                                                network.each_storage_block_delat_value_required_EPRs[j][b][self.delta_value]))
+                                                                                                network.each_storage_block_delat_value_required_EPRs[j][b][network.delta_value]))
 
                         
                         
