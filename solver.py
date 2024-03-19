@@ -178,8 +178,8 @@ class Solver:
             for k in work_load.each_t_user_pairs[t]:
                 for p in network.each_request_real_paths[k]+network.each_request_virtual_paths[k]:
                     print("path %s basic fidleity %s g function %s==%s rate is %s "%(p,
-                                                                                 network.self.each_path_basic_fidelity[path],
-                                                                                 self.oracle_for_target_fidelity[path][target],
+                                                                                 network.each_path_basic_fidelity[path],
+                                                                                 network.oracle_for_target_fidelity[path][target],
                                                                                  network.get_required_purification_EPR_pairs(p,work_load.get_each_request_threshold(network,k,10,t)),
                                                                                  w_vars[t,k,p].solution_value))
 
