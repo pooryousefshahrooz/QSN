@@ -207,7 +207,8 @@ class Solver:
                         for p in network.each_request_each_storage_each_block_paths[k][j][b]:
                             sum_served_from_storage +=w_vars[t,k,p].solution_value* network.get_required_purification_EPR_pairs(p,work_load.get_each_request_threshold(network,k,b,t))
                             if sum_served_from_storage>0:
-                                print("virtual path %s has rate %s with distillation %s "%(p,w_vars[t,k,p].solution_value,
+                                print("virtual path %s has rate %s g() %s with distillation %s "%(p,w_vars[t,k,p].solution_value,
+                                                                                                  network.get_required_purification_EPR_pairs(p,work_load.get_each_request_threshold(network,k,b,t)),
                                                                                       w_vars[t,k,p].solution_value* network.get_required_purification_EPR_pairs(p,work_load.get_each_request_threshold(network,k,b,t))))
                     if sum_served_from_storage>0:
                         print("served from storage %s cannot be higher than %s "%(sum_served_from_storage*network.delta_value,u_vars[j,b,t].solution_value))
