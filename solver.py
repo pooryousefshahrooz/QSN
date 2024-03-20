@@ -41,6 +41,9 @@ class Solver:
                                       name="u_{0}_{1}_{2}".format(j,b,t))  for t in work_load.T 
                        for j in network.storage_pairs for b in network.each_storage_blocks[j] 
                    }   
+    
+        opt_model.add_constraint(opt_model.sum(u_vars[1,0,19]) == 11153.114 
+            , ctname="static_const{0}_{1}".format(19,1))
 #         print("u_vars",u_vars)
         if life_time ==1000:
             #inventory evolution constraint
