@@ -42,7 +42,7 @@ class Solver:
                        for j in network.storage_pairs for b in network.each_storage_blocks[j] 
                    }   
     
-        opt_model.add_constraint(opt_model.sum(u_vars[1,0,19]) == 11153.114 
+        opt_model.add_constraint(opt_model.sum(u_vars[1,0,19]) == 10000 
             , ctname="static_const{0}_{1}".format(19,1))
 #         print("u_vars",u_vars)
         if life_time ==1000:
