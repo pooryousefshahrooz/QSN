@@ -52,7 +52,7 @@ class Solver:
                     for b in network.each_storage_blocks[j]:
 #                         for p_s in network.each_request_real_paths[j,b]:
                         if cyclic_workload:
-                            opt_model.add_constraint(u_vars[j,b,t] == u_vars[j,b,t-1]/network.get_each_storage_block_freshness(j,b)-
+                            opt_model.add_constraint(u_vars[j,b,t] == u_vars[j,b,(t-1)%len(work_load.T)]/network.get_each_storage_block_freshness(j,b)-
                             opt_model.sum(w_vars[(t-1)%len(work_load.T),k,p] *
                             network.get_required_purification_EPR_pairs(p,work_load.get_each_request_threshold(network,k,b,t))
                             for k in work_load.each_t_requests[t] if k!=j 
