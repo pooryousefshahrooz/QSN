@@ -183,7 +183,7 @@ class Solver:
                     print("path %s basic fidleity %s g function %s==%s rate is %s "%(p,
                                                                                  network.each_path_basic_fidelity[p],
                                                                                  network.oracle_for_target_fidelity[p][work_load.get_each_request_threshold(network,k,0,t)],
-                                                                                 network.get_required_purification_EPR_pairs(p,work_load.get_each_request_threshold(network,k,10,t)),
+                                                                                 network.get_required_purification_EPR_pairs(p,work_load.get_each_request_threshold(network,k,0,t)),
                                                                                  w_vars[k,p,t].solution_value))
 
                     
