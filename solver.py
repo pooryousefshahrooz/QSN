@@ -177,7 +177,7 @@ class Solver:
 #         opt_model.print_information()
         opt_model.solve()
         print("docplex.mp.solution",opt_model.solution)
-        print("storage F threshold",network.each_storage_block_time_treshold[1][0][0])
+        print("storage F threshold is ",network.each_storage_block_time_treshold[1][0][0])
         for t in work_load.T:
             for k in work_load.each_t_user_pairs[t]+network.storage_pairs:
                 for p in network.each_request_real_paths[k]+network.each_request_virtual_paths[k]:
