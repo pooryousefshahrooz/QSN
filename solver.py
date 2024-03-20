@@ -177,12 +177,12 @@ class Solver:
 #         opt_model.print_information()
         opt_model.solve()
         print("docplex.mp.solution",opt_model.solution)
-        for t in work_load.T[-1:]:
-            for k in work_load.each_t_user_pairs[t]:
+        for t in work_load.T:
+            for k in work_load.each_t_user_pairs[t]+network.storage_pairs:
                 for p in network.each_request_real_paths[k]+network.each_request_virtual_paths[k]:
                     print("path %s basic fidleity %s g function %s==%s rate is %s "%(p,
                                                                                  network.each_path_basic_fidelity[p],
-                                                                                 network.oracle_for_target_fidelity[p][work_load.get_each_request_threshold(network,k,10,t)],
+                                                                                 network.oracle_for_target_fidelity[p][work_load.get_each_request_threshold(network,k,0,t)],
                                                                                  network.get_required_purification_EPR_pairs(p,work_load.get_each_request_threshold(network,k,10,t)),
                                                                                  w_vars[k,p,t].solution_value))
 
