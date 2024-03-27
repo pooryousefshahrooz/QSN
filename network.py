@@ -7,6 +7,7 @@
 import numpy as np
 import time
 
+
 # In[ ]:
 
 
@@ -107,7 +108,9 @@ class Network:
                 
                 basic_fidelity  = (basic_fidelity)*((4*self.each_edge_fidelity[5]-1)/3)
                 basic_fidelity = basic_fidelity
+            # print("path %s has basic fidelity %s "%(path,basic_fidelity))
             self.each_path_basic_fidelity[path]= round(basic_fidelity,3)
+        
     def T_sequential_no_cutoff(τ_coh, mu_link, F_link,links):
         """ Calculate performance metrics for asynchronous sequential scheme using analytical formulas
         inputs:

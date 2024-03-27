@@ -4,7 +4,6 @@
 # In[12]:
 
 
-
 import csv
 import os
 import sys
@@ -18,6 +17,7 @@ import random
 from config import get_config
 from network import *
 from work_load import *
+
 
 # In[8]:
 
@@ -178,6 +178,15 @@ class Solver:
         opt_model.solve()
         print("docplex.mp.solution",opt_model.solution)
         print("storage F threshold is ",network.each_storage_block_time_treshold[1][0][0])
+        distillation_resurces = 1
+        for t in work_load.T[-1:]:
+            for k in work_load.each_t_user_pairs[t]+network.storage_pairs:
+                for p in network.each_request_real_paths[k]+network.each_request_virtual_paths[k]:
+                    if p in [1,2]:
+                    
+                        distillation_resurces*= network.get_required_purification_EPR_pairs(p,work_load.get_each_request_threshold(network,k,0,t))
+
+        
         for t in work_load.T:
             for k in work_load.each_t_user_pairs[t]+network.storage_pairs:
                 for p in network.each_request_real_paths[k]+network.each_request_virtual_paths[k]:
@@ -237,7 +246,7 @@ class Solver:
 
 
         opt_model.clear()
-        return objective_value
+        return objective_value,distillation_resurces
 
 
     def request_service_delay_minimization_discret(self,network,work_load,life_time,iteration,cyclic_workload,storage_capacity,delat_value,feasibility_flag):        
@@ -413,22 +422,27 @@ class Solver:
     
     
 
+
 # In[9]:
 
 
 
 
-# In[ ]:
-
-
-
 
 # In[ ]:
 
 
 
 
+
 # In[ ]:
+
+
+
+
+
+# In[ ]:
+
 
 
 

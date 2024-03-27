@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[3]:
+# In[2]:
 
 
 import networkx as nx
@@ -19,7 +19,8 @@ from network import *
 from work_load import *
 from solver import *
 
-# In[4]:
+
+# In[3]:
 
 
 #paths: 0:(0,1),(1,2),(2,3),(3,4),(4,5),
@@ -54,14 +55,14 @@ work_load = Work_load()
 # In[3]:
 
 
-results_file_path = "../QSN_results_final_maximizing_rate_doceherence_assumption_finalv9.csv"
+results_file_path = "../QSN_results_final_maximizing_rate_doceherence_assumption_finalv11.csv"
 τ_coh_list = np.logspace(1,2,20)
 τ_coh_list = np.linspace(0.1,400,100)
 τ_coh_list = [40]
 instance_counter = 0
 number_of_experiments = 1
 request_fidelity_thresholds = [0.9]
-storage_block_thresholds  = [0.8678947368421053,0.8831578947368421,0.8984210526315789]
+storage_block_thresholds  = [0.9]
 # storage_block_thresholds = np.linspace(0.7,0.99,20)
 storage_capacities = [i for i in range(20000,40000,20000)]
 t_max_list = [t for t in range(2,4,2)]
@@ -134,14 +135,14 @@ for t_max in t_max_list:
                         for delta_value in delta_values:
                             network.delta_value  =delta_value
                             
-                            for freshness_assumption in ["worst"]:
+                            for freshness_assumption in ["worst","avg"]:
                                 network.freshness_assumption = freshness_assumption
                                 network.set_required_EPR_pairs_each_storage_block_freshness()
     #                             for path,b_f in network.each_path_basic_fidelity.items():
     #                                 print(path,b_f,network.oracle_for_target_fidelity[path])
 
                                 solver =Solver()
-                                service_delay = solver.request_service_delay_minimization(network,work_load,
+                                service_delay,distillation_resurces = solver.request_service_delay_minimization(network,work_load,
                                                                           1000,i,True,
                                                                                          feasibility_flag)
 #                                 service_delay = solver.request_service_delay_minimization_discret(network,work_load,
@@ -153,7 +154,7 @@ for t_max in t_max_list:
                                               storage_capacity,τ_coh,delta_value,service_delay,
                                               network.each_edge_capacity[1],demand_max,
                                               feasibility_flag,freshness_assumption,network.each_edge_capacity[0]
-                                             ]
+                                             ,distillation_resurces]
                                 with open(results_file_path, 'a') as newFile:                                
                                                 newFileWriter = csv.writer(newFile)
                                                 newFileWriter.writerow([item for item in line_items])
@@ -175,7 +176,7 @@ for t_max in t_max_list:
     #                             time.sleep(30)
 
 
-# In[11]:
+# In[5]:
 
 
 # delta_value = 2
@@ -192,10 +193,11 @@ for t_max in t_max_list:
 
 
 
-# n_avg = network.get_avg_epr_pairs_DEJMPS(0.6195366318079998 ,0.9)
-# # print(n_avg)
+n_avg = network.get_avg_epr_pairs_DEJMPS(0.868 ,0.9)
+print(n_avg)
 # w = 200/n_avg
 # print(w)
+
 
 # In[ ]:
 
@@ -454,7 +456,9 @@ for t_max in t_max_list:
 #                                 print(ValueError)
 #                 print("until the %s th iteration we have %s"%(i,each_storage_each_path_number_value)) 
 
+
 # In[ ]:
+
 
 
 
